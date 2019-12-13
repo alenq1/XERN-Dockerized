@@ -1,0 +1,22 @@
+{
+    "name": "node-backend",
+    "context": "..",
+    "dockerComposeFile": ["../docker-compose.yml"], // You need to point it your `docker-compose.yml` file with proper path.
+    // Uncomment the next line if you want to publish any ports.
+    //"appPort": [3000, "8921:5000"],
+  
+    // Uncomment the next line to run commands after the container is created.
+    // "postCreateCommand": "python --version",
+    "service": "app", // You must define which service you are going to use from docker compose.
+    "workspaceFolder": "/backend", // path to your source inside docker file
+    "extensions": [
+      // extensions which is going to be installed inside the docker environment
+      "dbaeumer.vscode-eslint"
+    ],
+    "settings": {
+      // additional settings for VS Code configurations
+      // You can copy paste them from `settings.json` of your workspace
+      // Reference: https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
+      
+    }
+  }

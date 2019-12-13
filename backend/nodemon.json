@@ -1,0 +1,10 @@
+{
+    "verbose": true,
+    "ignore": ["src/**/*.spec.ts"],
+    "watch": ["src/**/*.ts"],
+    "execMap": {
+        "server": "tsc -w",
+        "ws_server": "tsc -w"
+    }
+  }
+  

@@ -1,0 +1,8 @@
+
+#DATABASE=postgres
+#TAG=alpine
+#DATA=/pgdata
+
+#DATABASE=mongo
+#TAG=latest
+#DATA=/data/db

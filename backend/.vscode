@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "/home/jnq/Documentos/proyectos/node/node-react"
+		}
+	],
+	"settings": {
+
+		"typescript.tsdk": "node_modules/typescript/lib"
+	}
+	
+	
+}

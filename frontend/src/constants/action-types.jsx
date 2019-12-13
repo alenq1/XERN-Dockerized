@@ -1,0 +1,31 @@
+export const EXAMPLE_ACTION = 'EXAMPLE_ACTION'
+export const SORTED = 'SORTED'
+//####
+export const CREATE_DATA = 'CREATE_DATA'
+export const FETCH_DATA = 'FETCH_DATA'
+export const UPDATE_DATA = 'UPDATE_DATA'
+export const DELETE_DATA = 'DELETE_DATA'
+export const LOADING_DATA = 'LOADING_DATA'
+export const ERROR_FETCH = 'ERROR_FETCH'
+//###
+export const LOADING_USER = 'LOADING_USER'
+export const LOGGED_USER = 'LOGGED_USER'
+export const ERROR_LOGIN = 'ERROR_LOGIN'
+export const LOGOUT_USER = 'LOGOUT_USER'
+
+//##
+export const REGISTERING_USER = 'REGISTERING_USER'
+export const REGISTERED_USER = 'REGISTERED_USER'
+export const ERROR_REGISTER = 'ERROR_REGISTER'
+
+//##
+export const WS_CONNECT = "WS_CONNECT";
+export const WS_CONNECTING = "WS_CONNECTING";
+export const WS_CONNECTED = "WS_CONNECTED";
+export const WS_ERROR = "WS_ERROR";
+export const WS_DISCONNECT = "WS_DISCONNECT";
+export const WS_DISCONNECTED = "WS_DISCONNECTED";
+export const WS_MESSAGE_SENT = "WS_MESSAGE_SENT";
+export const WS_MESSAGE_RECEIVED = "WS_MESSAGE_RECEIVED";
+export const WS_JOB_RECEIVED = "WS_JOB_RECEIVED";
+export const WS_OTHERJOB_RECEIVED = "WS_OTHERJOB_RECEIVED";

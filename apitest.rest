@@ -1,0 +1,15 @@
+POST http://localhost/api/register
+
+
+##
+
+
+Content-Type: application/json
+
+{
+"age": "99",
+"lastName": "fgasd",
+"name": "56666"
+}
+
+##GET http://localhost/api/crud

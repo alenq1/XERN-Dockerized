@@ -1,0 +1,113 @@
+version: "3.4"
+
+x-base: &base
+    env_file: backend/.env
+    build: 
+      context : backend/
+      dockerfile: Dockerfile
+
+services:
+  db:
+    container_name: mongo
+    build: 
+      context : db/mongo/
+      dockerfile: Dockerfile
+    volumes:
+      - dbdata:/data/db
+    env_file: db/mongo/.env  
+  
+  app:
+    <<: *base
+    container_name: nodeapp
+    entrypoint: ['entrypoints/start_server.sh']
+    volumes:
+      - ./backend:/backend
+      - modules_back:/backend/node_modules
+    healthcheck:
+      test: 'curl --fail http://localhost:3000/health/ || exit'
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    depends_on: 
+      - db 
+    expose:
+      - 3000
+
+  socketio:
+    <<: *base
+    container_name: socketio
+    entrypoint: ['entrypoints/start_ws_server.sh']
+    volumes:
+      - ./backend:/backend
+      - modules_back:/backend/node_modules
+    healthcheck:
+      test: 'curl --fail http://localhost:3000/health/ || exit'
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    depends_on: 
+      - db 
+    ports:
+      - '9000:9000'
+  
+  jobsworker:
+    <<: *base
+    container_name: jobsworker
+    entrypoint: ['entrypoints/start_worker_server.sh']
+    volumes:
+      - ./backend:/backend
+      - modules_back:/backend/node_modules
+    healthcheck:
+      test: 'curl --fail http://localhost:3000/health/ || exit'
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    depends_on: 
+      - db 
+  
+
+  frontend:
+    build:
+      network: host 
+      context : frontend/
+      dockerfile: Dockerfile
+    container_name: react
+    entrypoint: ['./entrypoint.sh']
+    volumes:
+      - ./frontend/:/frontend
+      - modules:/frontend/node_modules
+    env_file: frontend/.env
+    ports:
+      - '3000:3000'
+    links:
+      - app:app
+      - proxy:proxy
+      - socketio:socketio
+    depends_on:
+      - app
+  
+  proxy:
+    container_name: proxy_nginx
+    image: nginx:alpine
+    volumes:
+      - ./proxy/:/etc/nginx/conf.d
+      - ./frontend/build:/var/www/frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - app:app
+    depends_on:
+      - app
+  
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+volumes:
+  dbdata:
+  backend:
+  modules:
+  modules_back:
+  static_volume:
+  media_volume:
