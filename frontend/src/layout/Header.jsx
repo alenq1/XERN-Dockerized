@@ -24,16 +24,14 @@ const Header = ({username, history, LoggedOut}) => {
     <img
         src={sources.logo}
         width="125"
-        height="45"
-        
+        height="45"        
         alt="MERN Boilerplate"
       />
       Boilerplate
     </Navbar.Brand>
-    <Nav className="ml-2 mr-auto">
-      
-      
+    <Nav className="ml-2 mr-auto">      
     </Nav>
+    
     <Nav>
       {
       username !== 'anonymous' ? 
@@ -41,9 +39,8 @@ const Header = ({username, history, LoggedOut}) => {
         <DropdownButton alignRight
         title={username}  
         id="dropdown-menu-align-right">
-        <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-        <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-        <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
+        <Dropdown.Item eventKey="2" href="/">Home</Dropdown.Item>
+        <Dropdown.Item eventKey="2" href="/profile">Profile</Dropdown.Item>
         <Dropdown.Divider />
         
         <Dropdown.Item onSelect={function (){
@@ -60,34 +57,20 @@ const Header = ({username, history, LoggedOut}) => {
             if (result.value) {
               LoggedOut()
             }
-          })
-          
-          
-          
-          
-          
+          })      
         }}> Logout
         
         </Dropdown.Item>
       </DropdownButton>
-      
-               
         : 
-        
         <Button onClick={(e) =>           
-          
-          history.push("/login")
-        
+          history.push("/login")        
         }>
-          
           login
         </Button>
       }
-    </Nav>
-    
+    </Nav>    
   </Navbar>
-      
-    
   )
 }
 
@@ -97,11 +80,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
   LoggedOut: () => dispatch(LoggedOut())
-
 })
-
-
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header))

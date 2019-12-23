@@ -51,14 +51,10 @@ const Example = ({weather, scrap}) => {
     useEffect(() => {
         
         scrapNews(sources.scrapUrl)
-        
-        
     }, [])
 
-    console.log(scrapStatus, "SCRAP SRATUS")
-
-    
-    console.log(weather, "TIPO DATA WEATHER");
+    //console.log(scrapStatus, "SCRAP STATUS")
+    //console.log(weather, "DATA WEATHER");
     return (
         <>
         <h3 style={style.title}>Socket Example</h3>
@@ -89,7 +85,9 @@ const Example = ({weather, scrap}) => {
         }
         </div>
         <h3 style={style.title}>Scrap Example</h3>
-        <center><p><Button style={style.button} onClick={() => scrapNews(sources.scrapUrl)}>Scrap News</Button></p></center>
+        <center><p><Button style={style.button} onClick={() => scrapNews(sources.scrapUrl)}>
+            Scrap News</Button></p>
+        </center>
         <div className="row container-fluid justify-content-center col-4 col-sm-12">            
             
             {scrap && scrap.length > 0 ?

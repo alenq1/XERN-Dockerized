@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Title = () => {
+export const Title = ({content}) => {
     
     const style={
         margin: 20,
@@ -10,10 +10,8 @@ export const Title = () => {
     return (
         
         <div style={style}>
-
-        
             <h1>
-            CRUD example
+            {content}
             </h1>
         </div>
     )

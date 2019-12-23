@@ -13,9 +13,10 @@ const FormLogin = ({data, formType, action}) => {
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
 
-    //console.log(data.email, "VALOR DE eMAIL")
-    //console.log(formType, "TYPO DE FORM")
-    console.log(action, "ACCION a EJECUTA/r")
+    //console.log(data.email, "email value")
+    //console.log(action, "action to execute")
+    //console.log(formType, "form type")
+
 
     return (
       <Formik
@@ -26,11 +27,11 @@ const FormLogin = ({data, formType, action}) => {
             
           if(formType === 'login'){
           action(sources.LoginUrl, 'post', values)
-          console.log(sources.LoginUrl, 'post', values, "VALORES PARa LOGIN")
+          console.log(sources.LoginUrl, 'post', values, "Login Values")
           }
           else if(formType === 'register'){
             action(sources.RegisterUrl, 'post', values)
-          console.log(sources.RegisterUrl, 'post', values, "VALORES PARa REGISTER")
+          console.log(sources.RegisterUrl, 'post', values, "Register values")
           }
           else{
             Swal.fire({

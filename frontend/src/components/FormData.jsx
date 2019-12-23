@@ -30,8 +30,8 @@ const FormData = ({data, fetchCrudApi, action}) => {
 
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
-    console.log(data.email, "VALOR DE eMAIL")
-    console.log(action, "ACCION a EJECUTA/r")
+    //console.log(data.email, "email value")
+    //console.log(action, "action to execute")
 
     return (
       <Formik
@@ -41,21 +41,20 @@ const FormData = ({data, fetchCrudApi, action}) => {
           
           if(action === 'post'){
           fetchCrudApi(sources.dataAdmin, action, values)
-          console.log(sources.datAdmin, action, values, "VALORES PARa EJECUTAR CREATE")
+          //console.log(sources.datAdmin, action, values, "create action values")
           }
           else if(action === 'patch'){
             fetchCrudApi(sources.dataAdmin+data._id, action, values)
-          console.log(sources.dataAdmin, action, values, "VALORES PARa EJECUTAR UPDATE")
+          //console.log(sources.dataAdmin, action, values, "update action values")
             }
           else{
             Swal.fire({
               title: 'Error!',
-              text: `ESTE es ACTION ${action}`,
+              text: `This is Action ${action}`,
               icon: 'error',
               confirmButtonText: 'Cool'
             })
           }
-          
           
             //actions.setSubmitting(false);
           

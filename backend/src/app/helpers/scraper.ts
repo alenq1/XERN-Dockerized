@@ -3,15 +3,14 @@ import cheerio from 'cheerio'
 import config from '../settings/config'
 
     
-    const { scraping: { browsers, findTag, parentTag, attribute }} = config
-    //const { urls: {scraper}} = config
+const { scraping: { browsers, findTag, parentTag, attribute }} = config
+//const { urls: {scraper}} = config
 
-    
 export default async(job) => {
 
-        const result: Array<object> = []
+      const result: Array<object> = []
 
-        await axios({
+      await axios({
         url: job.data.url,
         headers:{
             'user-agent': browsers[Math.floor(Math.random()*browsers.length)]
@@ -20,8 +19,7 @@ export default async(job) => {
       .then(response => {
         const html = response.data;
         const $ = cheerio.load(html);
-        //const newsTitle = $('h3');
-        
+        //const newsTitle = $('h3');  
         //const complete = $('a').attr('data-click-id', 'body')
         //console.log(Object.values(newsTitle));
 
@@ -43,7 +41,6 @@ export default async(job) => {
         }
       );
       
-      console.log(result, "RESUTL PARa DEVOLVER")
+      console.log(result, "result for return")
       return result
-
 }

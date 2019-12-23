@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Crud from '../pages/Crud'
 import Login from '../pages/Login';
 import Example from '../pages/Example'
+import Users from '../pages/Users'
 import Footer from '../layout/Footer'
 import {ConnectWS} from '../actions/wsocket';
 import {connect} from 'react-redux';
@@ -26,7 +27,7 @@ const Main = ({ConnectWS}) => {
 
 
   return (
-    <div>
+    
       <Router history={hist}>
         <Header />
         <Switch>
@@ -35,13 +36,13 @@ const Main = ({ConnectWS}) => {
           <Route exact path='/example' component={Example} />
           <PrivateRoute>
           <Route exact path='/list' component={Crud} />
+          <Route exact path='/users' component={Users} />
           </PrivateRoute>
         </Switch>
         <Footer />
       </Router>
-    </div>
+    
   )
 }
-
 
 export default connect(null, {ConnectWS})(Main)

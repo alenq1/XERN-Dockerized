@@ -8,7 +8,7 @@ import {Card} from 'react-bootstrap'
 
 const Login = ({registerUser, LoginUser, history}) => {
 
-    console.log(history, "HISTORIAL  EN  RAIZ LOGIN")
+    //console.log(history, "history on login")
 
     const style = {
 
@@ -40,17 +40,17 @@ const Login = ({registerUser, LoginUser, history}) => {
     return (
         <div>
             <Card style={style}>
-            <Card.Header style={style.title} onClick={() => setUserForm(userForm.name === 'login' ? register : login)}>
-            <h1>
-            {userForm.name}
-            </h1> 
-            </Card.Header>
-            <Card.Body>
-            <FormLogin data={userForm.values}
-             action={userForm.action}
-             formType={userForm.name}
-            />
-            </Card.Body>
+                <Card.Header style={style.title} onClick={() => setUserForm(userForm.name === 'login' ? register : login)}>
+                <h1>
+                    {userForm.name}
+                </h1> 
+                </Card.Header>
+                <Card.Body>
+                <FormLogin data={userForm.values}
+                action={userForm.action}
+                formType={userForm.name}
+                />
+                </Card.Body>
             </Card>
         </div>
     )

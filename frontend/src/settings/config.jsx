@@ -13,6 +13,7 @@ export const sources = {
     refreshUrl: `${myHost}/api/tkrefresh/`,
     scrapUrl: `${myHost}/api/scrap/`,
     scrapPage: 'https://www.reddit.com/r/news/new/',
+    UsersUrl: `${myHost}/api/users/`,
     logo: require('../layout/imgs/mern.png')
 }
 

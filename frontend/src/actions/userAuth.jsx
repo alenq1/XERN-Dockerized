@@ -12,17 +12,17 @@ import {store} from '../store/store'
 import Swal from 'sweetalert2'
 //import adapter from 'axios/lib/adapters/http'
 import {hist}from '../layout/Main';
-
+import { SSL_OP_COOKIE_EXCHANGE } from 'constants';
 //const STATE = store.getState()
 
   
 export const registerUser = (url, method='post', data) => async(dispatch) => {
   
-  //console.log(STATE.example, "ESTADO de LA APP");
+    //console.log(STATE.example, "app state");
 
-    console.log(url, "URL A CONSULTAR");
-    console.log(method, "METODO A USAR ");
-    console.log(data, "DATA MANDADADA PARA FETCH");
+    //console.log(url, "URL");
+    //console.log(method, "METHOD");
+    //console.log(data, "DATA TO FETCH");
     
     dispatch({ type: LOADING_USER })
     
@@ -55,7 +55,7 @@ export const registerUser = (url, method='post', data) => async(dispatch) => {
         
         dispatch({ type: ERROR_REGISTER, payload: error.message })
         Swal.fire({
-          title: 'ERROR REGSITERING!',
+          title: 'ERROR REGISTERING!',
           text: error.response ?  error.response.data.message : error.message,
           icon: 'error',
           confirmButtonText: 'Cool'
@@ -68,12 +68,12 @@ export const registerUser = (url, method='post', data) => async(dispatch) => {
 
 export const LoginUser = (url, method='post', data) => async(dispatch) => {
   
-  //  console.log(STATE.example, "ESTADO de LA APP");
-  
-      console.log(url, "URL A CONSULTAR");
-      console.log(method, "METODO A USAR ");
-      console.log(data, "DATA MANDADADA PARA FETCH");
-      
+  //console.log(STATE.example, "app state");
+
+    //console.log(url, "URL");
+    //console.log(method, "METHOD");
+    //console.log(data, "DATA TO FETCH");
+        
       dispatch({ type: LOADING_USER })
       
     
@@ -81,14 +81,16 @@ export const LoginUser = (url, method='post', data) => async(dispatch) => {
         {
           method,
           url,
-          data
+          data,
+          withCredentials: true
           }
         
       )
         .then(response => {
-          console.log(response, "RESPONSE DE LOGIN CORRECTO")
-          localStorage.setItem('access-token', response.data.message.accessToken)
-          localStorage.setItem('refresh-token', response.data.message.refreshToken)
+          //console.log(response, "RESPONSE from login success")
+          sessionStorage.setItem('access-token', response.data.message.accessToken)
+          sessionStorage.setItem('refresh-token', response.data.message.refreshToken)
+
           dispatch({ type: LOGGED_USER, payload: response.data.message.username })
               Swal.fire({
                 title: 'LOGGIN SUCCESS!',
@@ -96,9 +98,7 @@ export const LoginUser = (url, method='post', data) => async(dispatch) => {
                 icon: 'success',
                 confirmButtonText: 'Cool'
               })
-              hist.push('/list') 
-          
-            
+              hist.push('/list')            
         })
     
         .catch(error => {
@@ -116,7 +116,8 @@ export const LoginUser = (url, method='post', data) => async(dispatch) => {
 
 export const LoggedOut = () => {
   
-          localStorage.clear()
+          sessionStorage.clear()
+          //document.cookie = "tkcookie= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
           hist.push('/')
               Swal.fire({
                  title: 'LOGGED OUT!',

@@ -8,10 +8,10 @@ export const setSort = (sortKey) => (dispatch, getState) => {
   const sortParams = getState().example.sortDirection
   //debugger;
 
-  console.log(sortParams, "SORT PARAMS PARa GET DEL ESTADO")
-  const order = get(sortParams, "order");
-  console.log(sortKey, "KEY PARA SORTEAR")
-  console.log(order, "ORDEN PARA SORTEAR")
+  console.log(sortParams, "SORT PARAMS")
+  const order = get(sortParams, "ordered params");
+  console.log(sortKey, "SORTKEY")
+  console.log(order, "ORDER")
 
   dispatch({
     type: SORTED,

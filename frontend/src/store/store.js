@@ -19,7 +19,6 @@ const persistConfig = {
 }
 
 
-
 const reducers = combineReducers({
   example: exampleReducer,
   user: userReducer,
@@ -27,9 +26,7 @@ const reducers = combineReducers({
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)
-
 const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
 const store = createStore(
   persistedReducer,
   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

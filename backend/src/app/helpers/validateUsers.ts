@@ -22,7 +22,6 @@ export const registerValidation = (data: IUser) => {
 
 return userSchema.validate(data);
 }
-// -> { value: { username: 'abc', birth_year: 1994 } }
 
 export const loginValidation = (data: IUser) => {
     const userSchema = Joi.object({
@@ -33,6 +32,21 @@ export const loginValidation = (data: IUser) => {
             .string()
             .min(6)
             .required()
+    });
+    return userSchema.validate(data);
+};
+
+
+export const userValidation = (data: IUser) => {
+    const userSchema = Joi.object({
+        username: Joi
+            .string()
+            .required(),
+        active: Joi
+            .boolean(),
+        role: Joi
+            .string()
+            .valid('admin','privileged','normal')
     });
     return userSchema.validate(data);
 };

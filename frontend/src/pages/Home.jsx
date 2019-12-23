@@ -36,34 +36,6 @@ const Home = ({fetchCrudApi, result, websocket}) => {
     const [healthCheck, setHealthCheck] = useState('checking...')
     const [homeLoading, sethomeLoading] = useState(false)
     const [backendApiData, setBackendData] = useState('')
-    
-    
-    // const checkWebsocket = (wsUrl) => {
-        
-    //     const io = socketIOClient(wsUrl)
-    //     console.log(io, 'este es socket')
-        
-    //     io.on('connection', setWsStatus('Sending PING'))
-        
-    //     io.emit('sendMessage', {
-    //             name: 'anonymous',
-    //             message: 'PING'
-    //             }, 
-    //         setWsStatus('Sending PING')
-    //         )
-    //     io.on('showMessage', message => {
-    //         //console.log(message, "FROM SERVER MESSAGE")
-    //         setWsStatus(message.message)
-    //         })
-    
-    //     io.on("disconnect", ()=>{ {setWsStatus('disconnect')}})    
-        
-    // }
-
-
-    
-
-
     const checkApiHealth = (Url) => {
 
         if(Url === sources.HealthEndpoint){
@@ -80,20 +52,17 @@ const Home = ({fetchCrudApi, result, websocket}) => {
             fetch(Url)
             .then(response => response.json())
             .then(jsonres => {    
-                console.log(jsonres, "RESPUESTA DE API");
+                console.log(jsonres, "api response");
                 sethomeLoading(false)
                 setBackendData(jsonres)
-                console.log(backendApiData, "ESTADO DE API  DE BACKEND");
+                console.log(backendApiData, "backend api state");
             })
             .catch((error) => {
                 sethomeLoading(false)
-                setBackendData('error')
-            
+                setBackendData('error')            
         })
             
             }
-
-
     }
 
 
@@ -101,9 +70,7 @@ const Home = ({fetchCrudApi, result, websocket}) => {
         
         //checkWebsocket(sources.WSocket)
 //        ConnectWS(sources.WSocket)
-        checkApiHealth(sources.HealthEndpoint)
-        
-
+        checkApiHealth(sources.HealthEndpoint)        
     }, [])
 
 
@@ -126,14 +93,9 @@ const Home = ({fetchCrudApi, result, websocket}) => {
                 
                 </Card.Body>
             </Card>
-            
-        
-                <Card style={style.card}>
+            <Card style={style.card}>
                 <Card.Header>Websocket State</Card.Header>
                 <Card.Body>
-
-            
-                
                     {
                     websocket.status === 'connected' ||  websocket.wsData === 'Receiving PONG' ? 
                     <h3 className='text-success'>{websocket.wsData}</h3> 
@@ -141,59 +103,51 @@ const Home = ({fetchCrudApi, result, websocket}) => {
                     <h3 className='text-danger'>{websocket.status}</h3> 
                     }
                 </Card.Body>
-                </Card>
-            
-                <Card style={style.card}>
+            </Card>
+            <Card style={style.card}>
                 <Card.Header>Scheduled Tasks</Card.Header>
                 <Card.Body>
-
                         <a className="btn btn-primary mt-2" role="button" href={sources.taskMonitor}>
                             check tasks
                         </a>
                 </Card.Body>
-                </Card>
-
-                <Card style={style.card}>
+            </Card>
+            <Card style={style.card}>
                 <Card.Header>Crud Example Page</Card.Header>
                 <Card.Body>
-
-                
                         <a className="btn btn-primary mt-2" role="button" href='/list'>
                             go to page
                         </a>
                 </Card.Body>
-                </Card>
-                
-                <Card style={style.card}>
+            </Card>
+            <Card style={style.card}>
                 <Card.Header>Socket/Scraper Example Page</Card.Header>
                 <Card.Body>
-
-                
                         <a className="btn btn-primary mt-2" role="button" href='/example'>
                             go to page
                         </a>
                 </Card.Body>
-                </Card>
-
-
-            
-        </div>
-        <Card style={style.card}>
-                <Card.Header>Backend Api request</Card.Header>
+            </Card>
+            <Card style={style.card}>
+                <Card.Header>Users Admin Page</Card.Header>
                 <Card.Body>
-
-                
-                
+                        <a className="btn btn-primary mt-2" role="button" href='/users'>
+                            go to page
+                        </a>
+                </Card.Body>
+            </Card>
+        </div>
+            <Card style={style.card}>
+                <Card.Header>Backend Api request</Card.Header>
+                <Card.Body>    
                     <button type="button" className="btn btn-primary mt-2"
                             onClick={() => checkApiHealth(sources.checkApiUrl)}>
                         check Request        
                     </button>    
                     {    
                         !backendApiData.data  &&
-                        null
-                    
+                        null                    
                     }        
-                    
                     {    
                         homeLoading === true &&
                         <div className='mt-3'>
@@ -203,23 +157,16 @@ const Home = ({fetchCrudApi, result, websocket}) => {
                         </Card.Header>
                         </div>
                     }
-                
                     {
                         backendApiData.message && 
-
-                        <Result type='Success' message={JSON.stringify(backendApiData.message, null, 2)}/>
-                                    
-                        
+                        <Result type='Success' message={JSON.stringify(backendApiData.message, null, 2)}/>                        
                     }
                     
                     {   (backendApiData.error && backendApiData.error.message) &&
-
                         <Result type='Error' message={backendApiData.error.message}/>
                     }
-
-            
                 </Card.Body>
-                </Card>
+            </Card>
         </>
     )
 }
@@ -232,5 +179,4 @@ const mapStateToProps = state => {
     }
   }
   
-
 export default connect(mapStateToProps, { fetchCrudApi })(withRouter(Home))

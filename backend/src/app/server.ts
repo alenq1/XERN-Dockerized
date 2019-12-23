@@ -1,9 +1,6 @@
 import app from './settings/app'
-//const app = require('./app')
 import config from './settings/config'
-//const {ports} = require('./config')
 
-//const pp = 0
 app.listen(config.ports.serverPort, (err) =>
   {
   if(err){
@@ -15,5 +12,3 @@ app.listen(config.ports.serverPort, (err) =>
   
   }
 );
-
-//module.exports = app

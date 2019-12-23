@@ -18,7 +18,7 @@ const initialState = {
 };
 
 const WSocketReducer = (state = initialState, action) => {
-    //console.log(action.payload, "PAYLOAD PARA CAMBIAR")
+    //console.log(action.payload, "action payload value")
 
     switch (action.type) {
         case WS_CONNECTING:

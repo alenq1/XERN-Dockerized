@@ -28,6 +28,4 @@ exampleSchema.methods.findSorted = async function(): Promise<any> {
     return await this.model('exampleData').find().sort({quantity: -1}) 
 }
 
-
-
 export default model<IExample>('exampleData', exampleSchema)

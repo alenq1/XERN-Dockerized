@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Title from '../components/Title'
 import { withRouter } from 'react-router-dom';
 import MainTable from '../components/tables/MainTable'
-import CrudData from '../components/tables/CrudData'
+import UserData from '../components/tables/UserData'
 import {ModalData, useModal} from '../components/ModalData'
 import { sortData } from '../selectors/sortData';
 import FormData from '../components/FormData';
@@ -20,9 +20,9 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
     const columns = {names:
         [
         'Name',
-        'Price',
-        'Quantity',
-        'Description',
+        'Mail',
+        'Role',
+        'Status',
       
     ],
     sortKey,
@@ -32,17 +32,13 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
     
     useEffect(() => {
         
-        fetchCrudApi(sources.dataAdmin,'get',null)
+        fetchCrudApi(sources.UsersUrl,'get',null)
         //console.log(action, "Form action")
         }, [])
 
     return (
         <div>
-            <Title content={'CRUD Example'}/>
-            {/* <CreateButton
-            handleShow={handleClose}
-            setAction={setAction}
-            /> */}
+            <Title content={'Users List'}/>
             <MainTable
             columns={columns}
             handleShow={handleShow}
@@ -50,7 +46,7 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
             setAction={setAction}
             setSort={setSort}
             >   
-                <CrudData 
+                <UserData 
                 setData={setData}
                 fetchCrudApi={fetchCrudApi}
                 result={result}
@@ -79,8 +75,9 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                 :                                
                 action === 'list' && data ? 
                 <>
-                    <p>{data.name}</p>
-                    <p>{data.price}</p>
+                    <p>{data.username}</p>
+                    <p>{data.role}</p>
+                    <p>{data.created}</p>
                 </>    
                 :
                     <p>NO DATA</p>

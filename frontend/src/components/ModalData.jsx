@@ -25,8 +25,6 @@ const style={
 
 export const ModalData = ({children, show, handleClose, title}) => ReactDOM.createPortal (
 
-  
-
         <>
         <Modal show={show} onHide={()=> handleClose()}>
         <Modal.Header style={style.title} closeButton>
@@ -35,14 +33,11 @@ export const ModalData = ({children, show, handleClose, title}) => ReactDOM.crea
         <Modal.Body>
             {children}
         </Modal.Body>
-        
-      </Modal>
+        </Modal>
       </>
       , document.body
   
  ) 
-
-
 
 export const ModalContent = ({data}) => {
     return (

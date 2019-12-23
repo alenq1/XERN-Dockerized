@@ -17,7 +17,7 @@ import {hist}from '../layout/Main';
 const STATE = store.getState()
 
 
-//axios.defaults.headers.common['access-token'] = localStorage.getItem('access-token')
+//axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
 
 
 
@@ -27,73 +27,74 @@ axios.interceptors.response.use(function (response) {
   function (error) {
     const originalRequest = error.config;
     if (!error.response) {
-    console.log(error, 'ERROR PRIAMRIO AL PRINCIPIO')
+    //console.log(error, 'First Resquest Error')
       return Promise.reject(error)
     }
     if(error.response.status === 401 && error.config.url === sources.refreshUrl){
-      console.log("SEGUNDO RECHAZO")
-      hist.push("/login")  
-      localStorage.clear()
+      //console.log(error, 'Second reject error')
+      hist.push("/login")
+      sessionStorage.clear()
       LoggedOut()
       return Promise.reject(error);
     }
 
     if (error.response.status === 401 && !originalRequest._retry) {
-    // Hace la solicitud de refresco de tokens
+    
       originalRequest._retry = true;
-    console.log(error.response.data, 'tipo de  error 401')
-    console.log( localStorage.getItem('refresh-token'),  localStorage.getItem('access-token'), 'tokens despues de 401')
-    console.log( 'se lanza peticion de refresh')
+    //console.log(error.response.data, 'error type')
+    //console.log( sessionStorage.getItem('refresh-token'),  sessionStorage.getItem('access-token'), 'tokens before changes')
+    //console.log('request for new access token')
       return axios({
         method: 'post',
         url: sources.refreshUrl, 
-        headers: {'refresh-token': localStorage.getItem('refresh-token')}
+        headers: {'refresh-token': sessionStorage.getItem('refresh-token')}
         
       })
         .then((responseData) => {
 
-        console.log( localStorage.getItem('refresh-token'),  localStorage.getItem('access-token'), 'originales antes de cambiar')
-        console.log(responseData.data, 'respuesta a consulta de refresh')
-          localStorage.setItem('access-token', responseData.data.message)
-          //originalRequest.headers['Authorization'] = 'Bearer ' + localStorage.access-token;
         
-        axios.defaults.headers.common['access-token'] = localStorage.getItem('access-token')
-        originalRequest.headers['access-token'] = localStorage.getItem('access-token')
-        // re-intenta la solicitud original
+        //console.log(responseData.data, 'response to new tken request')
+          sessionStorage.setItem('access-token', responseData.data.message)
+        //originalRequest.headers['Authorization'] = 'Bearer ' + sessionStorage.access-token;
+        
+        axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
+        originalRequest.headers['access-token'] = sessionStorage.getItem('access-token')
           return axios(originalRequest);
         })
         .catch((error) => {
-        console.log(localStorage.getItem('access-token'), localStorage.getItem('refresh-token'), 'tokens CON NUEVO ERROR PARA SER BORRADOS')
-        console.log(error.response, 'ERROR DE NUEVO EN PETICION')
+        //console.log(sessionStorage.getItem('access-token'), sessionStorage.getItem('refresh-token'), 'tokens after error response')
+        //console.log(error.response, 'finally error')
           
-        //localStorage.clear()
-
-        //hist.push("/login")
         LoggedOut()
           return Promise.reject(error);
         });
   }
   else if (error.response.status === 401) {
-    //console.log(error, 'ERROR 500 de Serrvidor')
+    //console.log(error, 'ERROR 401 from server')
     return Promise.reject(error)
   }
   
   else if (error.response.status === 500) {
-    //console.log(error, 'ERROR 500 de Serrvidor')
+    //console.log(error, 'ERROR 500 from server')
+    return Promise.reject(error)
+  }
+  else if (error.response.status === 403) {
+    //console.log(error, 'ERROR 403 from server')
+    hist.push("/")
     return Promise.reject(error)
   }
   else if (error.response.status === 404) {
-    //console.log(error, 'ERROR 404 No se encontro')
+    //console.log(error, 'ERROR 404 not found')
     return Promise.reject(error)
   }
   else if (error.response.status === 400) {
-    console.log(error.response.data, 'ERROR 400 Mal request')
+  // console.log(error.response.data, 'ERROR 400 Bad Request')
     return Promise.reject(error)
   }
   else {
-  console.log( localStorage.getItem('refresh-token'),  localStorage.getItem('access-token'), 'tokens DEVUELTOS EN ULTIMA PARTE')
-  console.log(error, 'ULTIMA PARTE DE ERROR DE PARA DEVOLVER')
-  localStorage.clear()
+  //
+  //console.log(error, 'interceptor finally error cause')
+  sessionStorage.clear()
   hist.push("/login")
   LoggedOut()
   return Promise.reject(error)
@@ -104,11 +105,11 @@ axios.interceptors.response.use(function (response) {
 
 const fetchCrudApi = (url, method, data) => async(dispatch) => {
   
-  console.log(STATE.example, "ESTADO de LA APP");
-  axios.defaults.headers.common['access-token'] = localStorage.getItem('access-token')
-    console.log(url, "URL A CONSULTAR");
-    console.log(method, "METODO A USAR ");
-    console.log(data, "DATA MANDADADA PARA FETCH");
+  //console.log(STATE.example, "app state");
+  axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
+    //console.log(url, "URL");
+    //console.log(method, "METHOD");
+    //console.log(data, "DATA TO FETCH");
     if(method === 'get'){
     dispatch({ type: LOADING_DATA })
     }
@@ -117,7 +118,8 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
       {
         method,
         url,
-        data
+        data,
+        withCredentials: true
         }
       
     )
@@ -170,7 +172,7 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
       })
   
       .catch(error => {
-        console.log(error, "RESPUESTA DE ERROR DE PETICION");
+        console.log(error, "error response from fetch");
         dispatch({ type: ERROR_FETCH, payload: error.message })
         Swal.fire({
           title: error.response ?  error.response.data.status : 'ERROR!',

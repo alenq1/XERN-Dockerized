@@ -12,11 +12,6 @@ wsapp.options('*', cors())
 
 const wshttp = new Server(wsapp)
 
-//const queue  = require('./tasks')
-
-
-// require the socket.io module
-
 export const io = socketIO.listen(wshttp);
 
 //socket.of('/ws')
@@ -24,7 +19,6 @@ export const io = socketIO.listen(wshttp);
 
 io.on('connection', socket => {
     console.log("Connected")
-  
     socket.on('sendMessage', message =>  { 
         console.log(message, "FROM CLIENT") 
         io.emit('showMessage', {name: 'USER', message: 'Receiving PONG'})})
@@ -33,21 +27,19 @@ io.on('connection', socket => {
         newJobs.Weather.queue.on('global:completed', (job, result) => {
   
             //console.log(`Job completed with resultttttttttttttttttttt ${result}`);
-            console.log(job, "ESTADO dEL JOB COMPLEATOD");
-            io.emit('jobMessage', {name: 'USER', message: JSON.parse(result)},
-            console.log("SOCKKKKKKKKKKKKKKKKKKET WHEATTTTTTERRRR ")
+            console.log(job, "Job completed state");
+            socket.broadcast.emit('jobMessage', {name: 'USER', message: JSON.parse(result)},
+            console.log(result, "Weather socket sended")
             )
           })
         newJobs.TestJob.queue.on('global:completed', (job, result) => {
   
             //console.log(`Job completed with resultttttttttttttttttttt ${result}`);
-            console.log(job, "ESTADO dEL JOB COMPLEATOD");
-            io.emit('otherjobMessage', {name: 'USER', message: JSON.parse(result)},
-            console.log(result, "SOCKKKKKKKKKKKKKKKKKKET SCRAPPPPPPPPPPPPPPPPP")
+            console.log(job, "Job completed state");
+            socket.emit('otherjobMessage', {name: 'USER', message: JSON.parse(result)},
+            console.log(result, "Scrap socket sended")
             )
           })
-        
-
 
         //queue.exampleQueue.on('completed', (job, result) => {
         //io.emit('taskResult', {result: result.newnumber})

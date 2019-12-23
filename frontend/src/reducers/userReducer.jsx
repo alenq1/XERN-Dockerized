@@ -19,7 +19,7 @@ import {
   
   const userReducer = (state = initialState, action) => {
   
-    //console.log(action.payload, "PAYLOAD")
+    //console.log(action.payload, "action payload")
     switch (action.type) {
   
       case LOADING_USER:
@@ -32,7 +32,7 @@ import {
         }
   
       case LOGGED_USER:
-          console.log(action.payload, "CREATEEEEEE SOY PAYLOAd PARa REDUCER")
+          //console.log(action.payload, "logged user action avalue")
           return {
             ...state,
             username: action.payload,
@@ -44,7 +44,7 @@ import {
           };
       
       case LOGOUT_USER:
-        console.log(action.payload, "GETTTTTTTTT SOY PAYLOAd PARa REDUCER")
+        //console.log( "logout action")
         return {
           ...state,
           username: 'anonymous',
@@ -55,7 +55,7 @@ import {
         };
   
       case ERROR_LOGIN:
-        console.log(action.payload, "UUUUUUUUUPDATE SOY PAYLOAd PARa REDUCER")
+        //console.log(action.payload, "error login action")
           return {
             ...state,
           username: 'anonymous',
@@ -66,7 +66,7 @@ import {
        };
   
        case REGISTERED_USER:
-        console.log(action.payload, "DDDDDEEELETE SOY PAYLOAd PARa REDUCER")
+        //console.log(action.payload, "register user action values")
         return {
           ...state,
           username: action.payload,

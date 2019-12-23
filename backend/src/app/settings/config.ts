@@ -44,6 +44,14 @@ scraping: {
     attribute: 'href'
 
 },
+
+authCookie: {
+        maxAge: 60 * 60 * 1000, // 1 hour
+        httpOnly: true,
+        secure: false, //switch to true for https
+        sameSite: true,    
+},
+
 misc: {
     cities: ['Beijing', 'Berlin','Dubai','Chicago', 'London', 'Moscow', 'Paris', 'Sydney', 'Tokyo']
 }

@@ -43,5 +43,3 @@ export const dataValidation = (data: IExample) => {
    
    return dataSchema.validate(data);
    }
-   
-

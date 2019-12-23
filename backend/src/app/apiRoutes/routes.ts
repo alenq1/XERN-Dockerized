@@ -1,6 +1,6 @@
 import {Router, Request, Response, RouterOptions} from 'express'
 import { getData, getAll, updateData, deleteData, createData } from '../controllers/crud'
-import { register, login, refreshToken, listUsers } from '../controllers/user'
+import { register, login, refreshToken, listUsers, updateUser } from '../controllers/user'
 import { validateRefreshToken, validateAccessToken } from '../middlewares/validateTokens'
 import { testApi, scrap } from '../controllers/test'
 
@@ -8,7 +8,7 @@ import { testApi, scrap } from '../controllers/test'
 const routes: Router = Router()
 
 
-export const customResponse: any = (status: string, message) => {
+export const customResponse: any = (status: string, message: any) => {
     return {status, message}
     }
 
@@ -31,7 +31,9 @@ routes.route('/crud/:id/')
 routes.route('/register/').post(register)
 routes.route('/login/').post(login)
 routes.route('/tkrefresh/').post(validateRefreshToken, refreshToken)
-routes.route('/users/').get(listUsers)
+routes.route('/users/').get(validateAccessToken, listUsers)
+routes.route('/users/:id')        
+        .patch(validateAccessToken, updateUser)
 
 
 

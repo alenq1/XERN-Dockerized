@@ -14,7 +14,7 @@ const Result = ({type, message}) => {
 
     }
 
-    console.log(message, "ESTO eS LO QUE LLLEGa A RESUTL");
+    console.log(message, "result value");
 
     return (
         <div className='mt-3'>
@@ -23,8 +23,7 @@ const Result = ({type, message}) => {
                     <Accordion >
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={TiThMenu} variant="link" eventKey="0">
-                            
+                            <Accordion.Toggle as={TiThMenu} variant="link" eventKey="0">                        
                             </Accordion.Toggle>
                             <span style={style} className='ml-3'>{type}</span> 
                             </Card.Header>
@@ -32,9 +31,7 @@ const Result = ({type, message}) => {
                             <Card.Body style={style.result}><pre>{message}</pre></Card.Body>
                             </Accordion.Collapse>
                         </Card>
-                    </Accordion>
-
-                
+                    </Accordion>                
                 </div>
     )
 }

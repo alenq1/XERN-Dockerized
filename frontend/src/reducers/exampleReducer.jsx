@@ -13,7 +13,7 @@ const initialState = {
   data: '',
   loading: false,
   error: '',
-  sortKey: 'Price',
+  sortKey: '',
   sortDirection: 'desc'
 
 }
@@ -33,7 +33,7 @@ const exampleReducer = (state = initialState, action) => {
       }
 
     case CREATE_DATA:
-        console.log(action.payload, "CREATEEEEEE SOY PAYLOAd PARa REDUCER")
+        //console.log(action.payload, "create data action value")
         return {
           ...state,
           data: state.data.concat([action.payload]),
@@ -42,7 +42,7 @@ const exampleReducer = (state = initialState, action) => {
         };
     
     case FETCH_DATA:
-      console.log(action.payload, "GETTTTTTTTT SOY PAYLOAd PARa REDUCER")
+      //console.log(action.payload, "fetch data action value")
       return {
         ...state,
         data: action.payload,
@@ -51,7 +51,7 @@ const exampleReducer = (state = initialState, action) => {
       };
 
     case UPDATE_DATA:
-      console.log(action.payload, "UUUUUUUUUPDATE SOY PAYLOAd PARa REDUCER")
+      //console.log(action.payload, "update action value")
         return {
           ...state,
           data: state.data.map( field => {
@@ -67,7 +67,7 @@ const exampleReducer = (state = initialState, action) => {
      };
 
      case DELETE_DATA:
-      console.log(action.payload, "DDDDDEEELETE SOY PAYLOAd PARa REDUCER")
+      //console.log(action.payload, "Delete action value")
       return {
         ...state,
         data: [...state.data].filter(field => field._id !== action.payload._id),
