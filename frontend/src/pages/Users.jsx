@@ -6,28 +6,29 @@ import MainTable from '../components/tables/MainTable'
 import UserData from '../components/tables/UserData'
 import {ModalData, useModal} from '../components/ModalData'
 import { sortData } from '../selectors/sortData';
-import FormData from '../components/FormData';
+import FormData from '../components/forms/FormData';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
-import {sources} from '../settings/config'
+import {sources, display} from '../settings/config'
 import CreateButton from '../components/CreateButton';
 
+
+// export const usersNamesCols =     [
+//     'Name',
+//     'Mail',
+//     'Role',
+//     'Status',
+//   ]
 
 const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) => {
 
     const {show, handleShow, handleClose, data, setData} = useModal()
     const [action, setAction] = useState('list')
-    const columns = {names:
-        [
-        'Name',
-        'Mail',
-        'Role',
-        'Status',
-      
-    ],
-    sortKey,
-    sortDirection
-}
+    const usersColumns = {
+        names:display.usersNamesCols,
+        sortKey,
+        sortDirection
+    }
     
     
     useEffect(() => {
@@ -40,26 +41,26 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
         <div>
             <Title content={'Users List'}/>
             <MainTable
-            columns={columns}
-            handleShow={handleShow}
-            loading={loading}
-            setAction={setAction}
-            setSort={setSort}
+                columns={usersColumns}
+                handleShow={handleShow}
+                loading={loading}
+                setAction={setAction}
+                setSort={setSort}
             >   
                 <UserData 
-                setData={setData}
-                fetchCrudApi={fetchCrudApi}
-                result={result}
-                colLength={columns.names.length}
-                handleShow={handleShow}
-                setAction={setAction}
+                    setData={setData}
+                    fetchCrudApi={fetchCrudApi}
+                    result={result}
+                    colLength={usersColumns.names.length}
+                    handleShow={handleShow}
+                    setAction={setAction}
                 />
             </MainTable>
             <ModalData show={show} handleClose={handleClose} title={action}>
                 {action === 'create' ?
                     <FormData data={{ name: '', price: '', quantity: '', description: ''}}
-                    fetchCrudApi={fetchCrudApi}
-                    action={'post'}   
+                        fetchCrudApi={fetchCrudApi}
+                        action={'post'}   
                     />
                 :    
                 action === 'update' && data ?
@@ -83,12 +84,11 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                     <p>NO DATA</p>
                 }
             </ModalData>         
-           
         </div>
     )
     }
 
-    const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
     result: sortData(state.example), 
     sortKey: state.example.sortKey,
     sortDirection: state.example.sortDirection,

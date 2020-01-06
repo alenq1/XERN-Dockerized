@@ -19,6 +19,9 @@ tokens:{
     refreshSecret: process.env.REFRESH_TOKEN || 'refresh',
     expireRefresh: '12h',
 },
+
+saltForPassword: 10,
+
 urls:{
     externalApi: 'https://api.publicapis.org/entries',
     wheatherApi:  (location: string) => 

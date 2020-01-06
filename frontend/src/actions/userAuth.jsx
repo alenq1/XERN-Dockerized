@@ -19,7 +19,6 @@ import { SSL_OP_COOKIE_EXCHANGE } from 'constants';
 export const registerUser = (url, method='post', data) => async(dispatch) => {
   
     //console.log(STATE.example, "app state");
-
     //console.log(url, "URL");
     //console.log(method, "METHOD");
     //console.log(data, "DATA TO FETCH");
@@ -32,8 +31,7 @@ export const registerUser = (url, method='post', data) => async(dispatch) => {
         method,
         url,
         data
-        }
-      
+        }      
     )
       .then(response => {
         
@@ -42,15 +40,11 @@ export const registerUser = (url, method='post', data) => async(dispatch) => {
         
             Swal.fire({
               title: 'REGISTER SUCCESS!',
-              text: `${response.data.name} REGISTERED SUCCESSFULLTY`,
+              text: `${response.data.name} REGISTERED SUCCESSFULLY`,
               icon: 'success',
-              confirmButtonText: 'Cool'
-          })
-  
-          
+              confirmButtonText: 'Ok'
+          })          
       })
-
-  
       .catch(error => {
         
         dispatch({ type: ERROR_REGISTER, payload: error.message })
@@ -58,25 +52,21 @@ export const registerUser = (url, method='post', data) => async(dispatch) => {
           title: 'ERROR REGISTERING!',
           text: error.response ?  error.response.data.message : error.message,
           icon: 'error',
-          confirmButtonText: 'Cool'
+          confirmButtonText: 'Ok'
         })
       })
   }
 
 
-
-
 export const LoginUser = (url, method='post', data) => async(dispatch) => {
   
-  //console.log(STATE.example, "app state");
-
+    //console.log(STATE.example, "app state");
     //console.log(url, "URL");
     //console.log(method, "METHOD");
     //console.log(data, "DATA TO FETCH");
         
       dispatch({ type: LOADING_USER })
       
-    
       await axios(
         {
           method,
@@ -90,17 +80,19 @@ export const LoginUser = (url, method='post', data) => async(dispatch) => {
           //console.log(response, "RESPONSE from login success")
           sessionStorage.setItem('access-token', response.data.message.accessToken)
           sessionStorage.setItem('refresh-token', response.data.message.refreshToken)
-
-          dispatch({ type: LOGGED_USER, payload: response.data.message.username })
+          dispatch({ type: LOGGED_USER, 
+                    payload: {
+                     username: response.data.message.username,
+                     id: response.data.message.id
+                    }})
               Swal.fire({
                 title: 'LOGGIN SUCCESS!',
                 text: `${response.data.message.username} WELCOME`,
                 icon: 'success',
-                confirmButtonText: 'Cool'
+                confirmButtonText: 'Ok'
               })
               hist.push('/list')            
         })
-    
         .catch(error => {
           
           dispatch({ type: ERROR_LOGIN, payload: error.message })
@@ -108,12 +100,11 @@ export const LoginUser = (url, method='post', data) => async(dispatch) => {
             title: 'ERROR LOGIN!',
             text: error.response ?  error.response.data.message : error.message,
             icon: 'error',
-            confirmButtonText: 'Cool'
+            confirmButtonText: 'Ok'
           })
         })
     }
   
-
 export const LoggedOut = () => {
   
           sessionStorage.clear()
@@ -125,10 +116,7 @@ export const LoggedOut = () => {
                  icon: 'info',
                  confirmButtonText: 'Ok'
                })
-          return {type: LOGOUT_USER}
-          
-           
-              
+          return {type: LOGOUT_USER}                        
             }
         
       

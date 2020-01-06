@@ -1,22 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link, NavLink } from 'react-router-dom';
 import fetchCrudApi from '../actions/fetchCrudApi'
 //import {ConnectWS} from '../actions/wsocket';
 import {exampleSelector} from '../selectors/exampleSelector'
 import socketIOClient from "socket.io-client";
 import {sources} from '../settings/config'
 import Result from '../components/Result'
-import { Card, Spinner} from 'react-bootstrap'
+import { Card, Spinner, Button} from 'react-bootstrap'
 
 
-const Home = ({fetchCrudApi, result, websocket}) => {
+const Home = ({fetchCrudApi, result, websocket, history}) => {
 
 
-   const style = {
-        //justifyContent: 'center',
+const style = {
+        
         //width: 450,
-        marginRight: 35,
+        margin: 35,
         //marginTop: 100,
         
         title:{
@@ -24,8 +24,10 @@ const Home = ({fetchCrudApi, result, websocket}) => {
             marginTop: 50
         },
         card:{
-            marginRight: 50,
-            marginLeft: 85,
+            display: 'flex',
+            justifyContent: 'center',
+            marginRight: 35,
+            marginLeft: 50,
             marginTop: 50,
             textAlign: 'center'
         },
@@ -65,118 +67,116 @@ const Home = ({fetchCrudApi, result, websocket}) => {
             }
     }
 
-
-    useEffect(() => {
-        
+    useEffect(() => {   
         //checkWebsocket(sources.WSocket)
 //        ConnectWS(sources.WSocket)
         checkApiHealth(sources.HealthEndpoint)        
     }, [])
 
-
     return (
-        
         <>
-        <h1 style={style.title}>Services Check</h1>
-        
-        <div className='row container-fluid'>
-            
-            <Card style={style.card}>
-                <Card.Header>Api Endpoint State</Card.Header>
-                <Card.Body>
-                
-                {   healthCheck === 'OK' ? 
-                        <h2 className='text-success'>{healthCheck}</h2> 
-                        : 
-                        <h2 className='text-danger'>{healthCheck}</h2> 
-                }
-                
-                </Card.Body>
-            </Card>
-            <Card style={style.card}>
-                <Card.Header>Websocket State</Card.Header>
-                <Card.Body>
-                    {
-                    websocket.status === 'connected' ||  websocket.wsData === 'Receiving PONG' ? 
-                    <h3 className='text-success'>{websocket.wsData}</h3> 
-                        : 
-                    <h3 className='text-danger'>{websocket.status}</h3> 
-                    }
-                </Card.Body>
-            </Card>
-            <Card style={style.card}>
-                <Card.Header>Scheduled Tasks</Card.Header>
-                <Card.Body>
-                        <a className="btn btn-primary mt-2" role="button" href={sources.taskMonitor}>
-                            check tasks
-                        </a>
-                </Card.Body>
-            </Card>
-            <Card style={style.card}>
-                <Card.Header>Crud Example Page</Card.Header>
-                <Card.Body>
-                        <a className="btn btn-primary mt-2" role="button" href='/list'>
-                            go to page
-                        </a>
-                </Card.Body>
-            </Card>
-            <Card style={style.card}>
-                <Card.Header>Socket/Scraper Example Page</Card.Header>
-                <Card.Body>
-                        <a className="btn btn-primary mt-2" role="button" href='/example'>
-                            go to page
-                        </a>
-                </Card.Body>
-            </Card>
-            <Card style={style.card}>
-                <Card.Header>Users Admin Page</Card.Header>
-                <Card.Body>
-                        <a className="btn btn-primary mt-2" role="button" href='/users'>
-                            go to page
-                        </a>
-                </Card.Body>
-            </Card>
-        </div>
-            <Card style={style.card}>
-                <Card.Header>Backend Api request</Card.Header>
-                <Card.Body>    
-                    <button type="button" className="btn btn-primary mt-2"
-                            onClick={() => checkApiHealth(sources.checkApiUrl)}>
-                        check Request        
-                    </button>    
-                    {    
-                        !backendApiData.data  &&
-                        null                    
-                    }        
-                    {    
-                        homeLoading === true &&
-                        <div className='mt-3'>
-                        <Card.Header>
-                            <Spinner animation="border" role="status" variant='dark'/>
-                            Loading
-                        </Card.Header>
-                        </div>
-                    }
-                    {
-                        backendApiData.message && 
-                        <Result type='Success' message={JSON.stringify(backendApiData.message, null, 2)}/>                        
-                    }
-                    
-                    {   (backendApiData.error && backendApiData.error.message) &&
-                        <Result type='Error' message={backendApiData.error.message}/>
-                    }
-                </Card.Body>
-            </Card>
+            <h1 style={style.title}>Services Check</h1>            
+            <div className='row container-fluid'>                
+                <Card style={style.card} className="shadow-lg">
+                    <Card.Header>Api Endpoint State</Card.Header>
+                    <Card.Body>                    
+                    {   healthCheck === 'OK' ? 
+                            <h2 className='text-success'>{healthCheck}</h2> 
+                            : 
+                            <h2 className='text-danger'>{healthCheck}</h2> 
+                    }                    
+                    </Card.Body>
+                </Card>
+                <Card style={style.card} className="shadow-lg">
+                    <Card.Header>Scheduled Tasks</Card.Header>
+                    <Card.Body>
+                            <a className="btn btn-primary mt-2" role="button" href={sources.taskMonitor}>
+                                check tasks
+                            </a>
+                    </Card.Body>
+                </Card>
+                <Card style={style.card} className="shadow-lg">
+                    <Card.Header>Crud Example</Card.Header>
+                    <Card.Body>
+                            <Button className="btn btn-primary mt-2" onClick={() => history.push('/list')}>
+                                go to page
+                            </Button>
+                            
+                    </Card.Body>
+                </Card>
+                <Card style={style.card} className="shadow-lg">
+                    <Card.Header>Users Admin</Card.Header>
+                    <Card.Body>                    
+                        <Button
+                            className="btn btn-primary mt-2" 
+                            onClick={() => history.push('/users')}>
+                                go to page
+                        </Button>        
+                    </Card.Body>
+                </Card>
+                <Card style={style.card} className="shadow-lg">
+                    <Card.Header>Socket/Scraper Example</Card.Header>
+                    <Card.Body>                        
+                        <Button 
+                            className="btn btn-primary mt-2" 
+                            onClick={() => history.push('/example')}>
+                                go to page
+                        </Button>                        
+                    </Card.Body>
+                </Card>
+            </div>
+            <div className='row container-fluid'>
+                <Card style={{...style.card, display: 'inline-table'}} className="shadow-lg">
+                    <Card.Header>Websocket State</Card.Header>
+                    <Card.Body>
+                        {
+                        websocket.status === 'connected' ||  websocket.status === 'message received' ? 
+                        <h3 className='text-success'>{websocket.status}</h3> 
+                            : 
+                        <h3 className='text-danger'>{websocket.status}</h3> 
+                        }
+                    </Card.Body>
+                </Card>            
+                <Card style={{...style.card, width: '65%'}} className="shadow-lg">
+                    <Card.Header>Backend Api request</Card.Header>
+                    <Card.Body>    
+                        <Button className="mt-2"
+                                onClick={() => checkApiHealth(sources.checkApiUrl)}>
+                            check Request        
+                        </Button>    
+                        {    
+                            !backendApiData.data  &&
+                            null                    
+                        }        
+                        {    
+                            homeLoading === true &&
+                            <div className='mt-3'>
+                                <Card.Header>
+                                    <Spinner animation="border" role="status" variant='dark'/>
+                                    Loading
+                                </Card.Header>
+                            </div>
+                        }
+                        {
+                            backendApiData.message && 
+                            <Result type='Success' message={JSON.stringify(backendApiData.message, null, 2)}/>                        
+                        }
+                        
+                        {   (backendApiData.error && backendApiData.error.message) &&
+                            <Result type='Error' message={backendApiData.error.message}/>
+                        }
+                    </Card.Body>
+                </Card>
+            </div>
         </>
     )
 }
 
-
 const mapStateToProps = state => {
     return {
-      result: state.example,
-      websocket: state.socketdata
+        result: state.example,
+        websocket: state.socketdata
     }
-  }
-  
+}
+
 export default connect(mapStateToProps, { fetchCrudApi })(withRouter(Home))

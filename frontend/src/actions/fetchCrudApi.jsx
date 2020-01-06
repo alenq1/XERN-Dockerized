@@ -20,7 +20,6 @@ const STATE = store.getState()
 //axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
 
 
-
 axios.interceptors.response.use(function (response) {
   return response;
 }, 
@@ -51,12 +50,10 @@ axios.interceptors.response.use(function (response) {
         
       })
         .then((responseData) => {
-
         
         //console.log(responseData.data, 'response to new tken request')
           sessionStorage.setItem('access-token', responseData.data.message)
         //originalRequest.headers['Authorization'] = 'Bearer ' + sessionStorage.access-token;
-        
         axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
         originalRequest.headers['access-token'] = sessionStorage.getItem('access-token')
           return axios(originalRequest);
@@ -64,8 +61,9 @@ axios.interceptors.response.use(function (response) {
         .catch((error) => {
         //console.log(sessionStorage.getItem('access-token'), sessionStorage.getItem('refresh-token'), 'tokens after error response')
         //console.log(error.response, 'finally error')
-          
-        LoggedOut()
+          hist.push("/login")
+          sessionStorage.clear()
+          LoggedOut()
           return Promise.reject(error);
         });
   }
@@ -94,10 +92,10 @@ axios.interceptors.response.use(function (response) {
   else {
   //
   //console.log(error, 'interceptor finally error cause')
-  sessionStorage.clear()
-  hist.push("/login")
-  LoggedOut()
-  return Promise.reject(error)
+    hist.push("/login")
+    sessionStorage.clear()
+    LoggedOut()
+    return Promise.reject(error)
   }
 
 })
@@ -163,12 +161,9 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
             title: 'DELETE SUCCESS!',
             text: `${response.data.message.name} Deleted`,
             icon: 'success',
-            confirmButtonText: 'ok'
+            confirmButtonText: 'Ok'
           })
-          }
-
-
-        
+          }        
       })
   
       .catch(error => {

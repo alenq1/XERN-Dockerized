@@ -16,7 +16,7 @@ const QueueList = (workerjobs: any) => {
   workerjobs.map( singlejob =>
     {
       
-      console.log(singlejob.name, 'QUeue name')
+      console.log(singlejob.name, 'Queue ready for process')
       singlejob.queue = new Queue(singlejob.name, config.services.redis)
       //console.log(singlejob.queue, 'SINGLE QUEUE')
       //console.log(singlejob.action, 'action to execute')
@@ -31,19 +31,11 @@ const QueueList = (workerjobs: any) => {
 
 QueueList(Object.values(jobs))
 
-console.log(jobs, "Jobs after declared")
+//console.log(jobs, "Jobs after declared")
+//configs for jobs queues 
+
 jobs.Weather.queue.add({location:config.misc.cities}, jobs.Weather.options)
 jobs.Weather.queue.removeRepeatable(jobs.Weather.options)
-//jobs.Weather.queue.on('completed', jobs.Weather.queue.close)
+
 
 export const newJobs = jobs
-
-
-
-
-
-
-
-
-
-

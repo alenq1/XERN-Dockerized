@@ -1,11 +1,9 @@
 import React from 'react'
 import { Formik, Field, ErrorMessage } from 'formik';
 import {Col, InputGroup, Button, Form} from 'react-bootstrap'
-import ValidateFormLogin from '../helpers/ValidateFormLogin'
+import ValidateFormLogin from '../../helpers/ValidateFormLogin'
 import Swal from 'sweetalert2'
-import {sources} from '../settings/config'
-
-
+import {sources} from '../../settings/config'
 
 
 const FormLogin = ({data, formType, action}) => {
@@ -17,38 +15,34 @@ const FormLogin = ({data, formType, action}) => {
     //console.log(action, "action to execute")
     //console.log(formType, "form type")
 
-
     return (
       <Formik
-      validationSchema={ValidateFormLogin}
-      onSubmit={
-        (values, actions) => {
-          
-            
-          if(formType === 'login'){
-          action(sources.LoginUrl, 'post', values)
-          console.log(sources.LoginUrl, 'post', values, "Login Values")
-          }
-          else if(formType === 'register'){
-            action(sources.RegisterUrl, 'post', values)
-          console.log(sources.RegisterUrl, 'post', values, "Register values")
-          }
-          else{
-            Swal.fire({
-              title: 'Error!',
-              text: `ACTION FALIED ON ${formType}`,
-              icon: 'error',
-              confirmButtonText: 'OK'
-            })
-            actions.handleReset()
-          }
-                    
-            //actions.setSubmitting(false);
+        initialValues={data}
+        validationSchema={ValidateFormLogin}
+        onSubmit={
+          (values, actions) => {
+                        
+            if(formType === 'login'){
+              action(sources.LoginUrl, 'post', values)
+              console.log(sources.LoginUrl, 'post', values, "Login Values")
+            }
+            else if(formType === 'register'){
+              action(sources.RegisterUrl, 'post', values)
+              console.log(sources.RegisterUrl, 'post', values, "Register values")
+            }
+            else{
+              Swal.fire({
+                title: 'Error!',
+                text: `ACTION FALIED ON ${formType}`,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
+              actions.handleReset()
+            }                    
+              //actions.setSubmitting(false);
+          }          
         }
-                
-        }
-      initialValues={data}
-    >
+      >
       {({
         handleSubmit,
         handleChange,
@@ -59,8 +53,7 @@ const FormLogin = ({data, formType, action}) => {
         isValid,
         errors,
       }) => (
-        
-        
+      
         <Form noValidate onSubmit={handleSubmit}>    
             <Form.Group controlId="validationFormikUsername">
               <Form.Label>Username</Form.Label>

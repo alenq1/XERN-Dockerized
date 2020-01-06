@@ -9,7 +9,6 @@ import { UI, setQueues } from 'bull-board'
 import {newJobs} from '../helpers/queuelist'
 
 //setQueues(Object.values(newJobs).map( single => {single.queue})  )
-
 //const clientSession = require('client-sessions');
 //const {SESSION_SECRET} = require('./config');
 

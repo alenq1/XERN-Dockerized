@@ -17,22 +17,22 @@ const Result = ({type, message}) => {
     console.log(message, "result value");
 
     return (
-        <div className='mt-3'>
-                    
-                
-                    <Accordion >
-                        <Card>
-                            <Card.Header>
-                            <Accordion.Toggle as={TiThMenu} variant="link" eventKey="0">                        
-                            </Accordion.Toggle>
-                            <span style={style} className='ml-3'>{type}</span> 
-                            </Card.Header>
-                            <Accordion.Collapse eventKey="0">
-                            <Card.Body style={style.result}><pre>{message}</pre></Card.Body>
-                            </Accordion.Collapse>
-                        </Card>
-                    </Accordion>                
-                </div>
+        <div className='mt-3'>        
+            <Accordion >
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle as={TiThMenu} variant="link" eventKey="0">                        
+                        </Accordion.Toggle>
+                        <span style={style} className='ml-3'>{type}</span> 
+                    </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                            <Card.Body style={style.result}>
+                                <pre>{message}</pre>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                </Card>
+            </Accordion>                
+        </div>
     )
 }
 

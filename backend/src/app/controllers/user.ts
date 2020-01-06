@@ -12,6 +12,7 @@ export const register = async(req:Request, res:Response) => {
     
     const userExists = await User.findOne({ email: req.body.email, $or: [{username: req.body.username}]});
     if (userExists) return res.status(400).send(customResponse('Error', 'user exists'));;
+    
     try {   
         
         //const isRegistered =  User.find({username: req.body.username})
@@ -28,7 +29,7 @@ export const register = async(req:Request, res:Response) => {
             'Register Success', 
             `your user ${registerUser.username} has been registered`
         ))
-        console.log('USER REGISTER')
+        //console.log('USER REGISTER')
 
     } 
     catch (error) {
@@ -50,21 +51,23 @@ export const login = async (req:Request, res:Response) => {
 
     if (user.active === false) return res.status(403).send(customResponse('User Disabled', 'Please Contact with the Admin to activate your account'));
     
-    const accessToken: any = await user.generateAccessToken(req.body.username, user.id)
-    const refreshToken = await user.generateRefreshToken(req.body.username, user.id)
+    const accessToken: string = await user.generateAccessToken(req.body.username, user.id)
+    const refreshToken: string = await user.generateRefreshToken(req.body.username, user.id)
+    // if want to work with cookie 
     res.cookie('tkcookie', accessToken, config.authCookie)
-    const {username} = user
+    const {username, id} = user
     //res.append('access-token', accessToken)
     //res.append('refresh-token', refreshToken)
-    res.status(200).send(customResponse('Login Success',{username, accessToken, refreshToken}));
-    console.log(req.body, 'login sucess')
+    res.status(200).send(customResponse('Login Success',{username, id, accessToken, refreshToken}));
+    //console.log(req.body, 'login sucess')
 
 }
 
 
 export const refreshToken = async (req:Request, res:Response) => {
+    
     try {
-        console.log(req.body.user, "USUARIO DEL MIDEWARE TOKEN DESCIFRADO")
+        //console.log(req.body.user, "user from middleware with token dechipher")
         //const user = new User()
         const user = await User.findOne({ username: req.body.user });
         if (!user) return res.status(400).send(customResponse('Login Failed', 'User doesnt exists'));
@@ -74,7 +77,7 @@ export const refreshToken = async (req:Request, res:Response) => {
         res.status(200).send(customResponse('Token Generated', accessToken));
     } 
     catch (error) {
-        res.status(401).send(customResponse('Error', error));
+        res.status(401).send(customResponse('Token Error', error));
     }
 }
 
@@ -83,15 +86,18 @@ export const listUsers = async (req:Request, res:Response) => {
     const user = await User.findOne({ username: req.body.username });
     if (!user) return res.status(401).send(customResponse('Access Denied', 'User doesnt exists'));
     if (user.role === 'admin') {
-    try {
+    
+        try {
         const all: IUser[] = await User.find()
         //const all = new exampleData()
         res.status(200).send(customResponse('ok', all));
-    } 
-    catch (error) {
-        res.status(404).send(customResponse('error', error));
+        } 
+    
+        catch (error) {
+        res.status(404).send(customResponse('error find users', error));
+        }
     }
-    }
+
     else{
         res.status(403).send(customResponse('Access Denied', 'You are not allowed to access this page'));
    }
@@ -100,64 +106,50 @@ export const listUsers = async (req:Request, res:Response) => {
 
 export const updateUser = async (req:Request, res:Response) => {
 
-    console.log(req.body, "DATA USER TO MODIFY")
-    const { error } = await userValidation(req.body);    
-    if (error) {
-        console.log(error, "ERROR GETTING UPDATE")
-        return res.status(400).send(customResponse('Invalid Data', error));}
-    const { role, active, password } = req.body
-    const rawdata = {role, active, password}
-    Object.keys(rawdata).forEach((key) => 
-    (rawdata[key] === null || rawdata[key] === undefined) && delete rawdata[key]);
-    console.log(rawdata, "CLEAN DATA")
+    //console.log(req.body, "BODY FROM MIDLEWARE VALIDATE UPADTE")
+    
+    const {rawdata} = req.body
+
     try {
-    const toUpdate = await User.findByIdAndUpdate(req.params.id, 
-        rawdata,
-        {new: true})
-    console.log(toUpdate, "DATA MODIFIED")
-    res.status(200).send(customResponse('updated', toUpdate))  
-  } 
-  catch (error) {
-      console.log(error, "UPDATE ERROR")
-    res.status(500).send(customResponse('error', error))
-  }
+        const toUpdate = await User.findByIdAndUpdate(req.params.id, 
+            rawdata,
+            {new: true})
+        //console.log(toUpdate, "DATA MODIFIED")
+        res.status(200).send(customResponse('updated', toUpdate))  
+    }  
+    catch (error) {
+        console.log(error, "UPDATE ERROR")
+        res.status(500).send(customResponse('error', error))
+    }
+}
+
+export const userProfile = async(req: Request, res:Response): Promise<void>  => {
+
+    //console.log(req.params, "get single")
+    
+    try {
+        
+        const data = await User.findOne({_id: req.params.id})
+        res.status(200).send(customResponse('ok', [data]))    
+    } 
+    catch (error) {
+        res.status(404).send(customResponse('error', error))
+        
+    }
+}
+
+export const deleteUser = async(req: Request, res:Response): Promise<void> => {
+
+    //console.log(req.params, "delete")
+    try {
+      
+        //const toDelete = await User.findByIdAndRemove(req.params.id)
+        //console.log(toDelete, "DATA DELETED")
+        res.status(404).send(customResponse('Option Disabled', 'Temporal maintenance disabled'))  
+    } 
+    catch (error) {
+        res.status(500).send(customResponse('error', error))
+      }
 }
 
 
-//     const user = await User.findOne({ username: req.body.username });
-//     if (!user) return res.status(401).send(customResponse('Access Denied', 'User doesnt exists'));
-//     if (user.role !== 'Admin') {
-//     try {
-//         const all: IUser[] = await User.find()
-//         //const all = new exampleData()
-//         res.status(200).send(customResponse('ok', all));
-//     } 
-//     catch (error) {
-//         res.status(404).send(customResponse('error', error));
-//     }
-//     }
-//     else{
-//         res.status(403).send(customResponse('Access Denied', 'You are not allowed to access this page'));
-//    }
-// }
-
-
-
-// export const updateData = async(req: Request, res:Response) => {
-
-//     console.log(req.body, "update")
-//     console.log(req.params, "params")
-//     const { error } = await dataValidation(req.body);
-//     if (error) {
-//         console.log(error, "ERROR GETTING UPDATE")
-//         return res.status(400).send(customResponse('Invalid Data', error));}
-//   try {
-//     const toUpdate = await exampleData.findByIdAndUpdate(req.params.id, req.body, {new: true})
-//     console.log(toUpdate, "DATA MODIFIED")
-//     res.status(200).send(customResponse('updated', toUpdate))  
-//   } 
-//   catch (error) {
-//       console.log(error, "UPDATE ERROR")
-//     res.status(500).send(customResponse('error', error))
-//   }
-// }

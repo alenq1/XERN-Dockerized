@@ -29,7 +29,6 @@ const exampleReducer = (state = initialState, action) => {
         // IF DONT WANT KEEP THE PREVIOUS STATE WHILE LOADING
         ...state,
         loading: true
-
       }
 
     case CREATE_DATA:
@@ -37,8 +36,7 @@ const exampleReducer = (state = initialState, action) => {
         return {
           ...state,
           data: state.data.concat([action.payload]),
-          loading: false
-  
+          loading: false  
         };
     
     case FETCH_DATA:
@@ -47,7 +45,6 @@ const exampleReducer = (state = initialState, action) => {
         ...state,
         data: action.payload,
         loading: false
-
       };
 
     case UPDATE_DATA:
@@ -63,16 +60,14 @@ const exampleReducer = (state = initialState, action) => {
             }
           }),
           loading: false
-  
-     };
+        };
 
-     case DELETE_DATA:
+    case DELETE_DATA:
       //console.log(action.payload, "Delete action value")
       return {
         ...state,
         data: [...state.data].filter(field => field._id !== action.payload._id),
         loading: false
-
       }; 
 
     case ERROR_FETCH:
@@ -89,12 +84,10 @@ const exampleReducer = (state = initialState, action) => {
         sortKey: action.payload.sortKey,
         sortDirection: action.payload.sortDirection
         };
-      
-    
+          
     default:
-
       return state
-
   }
 }
+
 export default exampleReducer;

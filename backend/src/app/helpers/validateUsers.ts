@@ -46,10 +46,11 @@ export const userValidation = (data: IUser) => {
             .boolean(),
         role: Joi
             .string()
-            .valid('admin','privileged','normal')
+            .valid('admin','privileged','normal'),
+        password: Joi
+            .string()
+            .min(6),
+        passwordConfirmation: Joi.any().valid(Joi.ref('password'))
     });
     return userSchema.validate(data);
 };
-
-
-

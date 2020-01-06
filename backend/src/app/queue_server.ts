@@ -1,21 +1,11 @@
-//import Queue from 'bull'
 //import config from './settings/config'
 import {newJobs} from '../app/helpers/queuelist'
-import * as jobs from '../app/jobs/index'
-//import {fetchWeather, options} from '../app/jobs/exampleJob'
 import {setQueues} from 'bull-board'
-import {io} from '../app/socket/sockets'
 import { Ijobs } from './interfaces/jobs'
 
 
-// setQueues(newJobs.Weather.queue)
 // //console.log(jobs, "jobs en server ")
 // console.log(newJobs.Weather.queue, "new jobs en server ")
-// newJobs.Weather.queue.on('completed', (job, result) => {
-//   console.log(`Job completed with resultttttttttttttttttttt ${job.returnvalue}`);
-//   console.log(job, "job completed state");
-// })
-
 //console.log(Object.values(newJobs), "for start server")
 
 const StartService = (jobsList: any) => {
@@ -29,16 +19,11 @@ const StartService = (jobsList: any) => {
   })
 }
 
-StartService(newJobs)
+try
+{
+  StartService(newJobs)
+}
+catch(error){
+  console.log(error, "Queue service found error")
+}
 
-//console.log(newJobs, "PROCESANDo TRABAJOS")
-//console.log(finalList, "Queue list")
-//QueueList(Object.values(jobs))
-// const start = (list) => {
-
-// list.map( queue => {
-
-//   console.log(queue.name, "STARTED")
-// }
-//   )}
-// start(QueueList)

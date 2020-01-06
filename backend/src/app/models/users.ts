@@ -54,11 +54,13 @@ const userSchema = new Schema({
     },
     created: {
         type: Date, 
-        default: Date.now()},
+        default: Date.now()
+    },
     updated: { 
         type: Date, 
         default: Date.now(), 
-        required:true}
+        required:true
+    }
 }
 )
 
@@ -76,20 +78,33 @@ userSchema.methods.generateRefreshToken = async function(user: string, id: strin
     return refreshToken;
   }
 
-userSchema.methods.encryptPassword = async (password: string): Promise<string> => {
+userSchema.methods.encryptPassword = async function(password: string): Promise<string> {
     const salt = await bcryptjs.genSaltSync(10);
-    return bcryptjs.hashSync(password, salt);
+    return await bcryptjs.hashSync(password, salt);
 };
+
+
+// userSchema.pre<IUser>('save', async function(next) {
+//     var user = this;
+//     console.log(user.password, "PASSWORD TO CHANGE")
+//     // only hash the password if it has been modified (or is new)
+//     if (!user.isModified('password')) return next();
+//     // generate a salt
+//     await bcryptjs.genSalt(10, async function(err, salt) {
+//      if (err) return next(err);
+//      // hash the password using our new salt
+//      await bcryptjs.hash(user.password, salt, function(err, hash) {
+//       if (err) return next(err);
+//       // override the cleartext password with the hashed one
+//       user.password = hash;
+//       next();
+//      });
+//     });
+//    });
+
 
 userSchema.methods.validatePassword = async function (password: string): Promise<boolean> {
     return await bcryptjs.compareSync(password, this.password);
 };
 
-// userSchema.methods.updateUser = async function(id: string, field: any): Promise<any> { 
-//     return await this.model('exampleData').findbyId(id, )
-// }
-
-
-
-  
 export default model<IUser>('users', userSchema)

@@ -4,7 +4,7 @@ import config from '../settings/config'
 
     
 const { scraping: { browsers, findTag, parentTag, attribute }} = config
-//const { urls: {scraper}} = config
+
 
 export default async(job) => {
 
@@ -23,24 +23,25 @@ export default async(job) => {
         //const complete = $('a').attr('data-click-id', 'body')
         //console.log(Object.values(newsTitle));
 
-        $(findTag).each( function(i, el){ 
+        $(findTag).each( function(i, element){ 
         //$('a').attr('data-click-id', 'body').each( function(i, el){ 
             //Titles[i] = $(el).text()
             result.push({
-                title: $(el).text(),
-                link: $(el).parents(parentTag).attr(attribute)
+                title: $(element).text(),
+                link: $(element).parents(parentTag).attr(attribute)
             })
         })
         //Object.values(newsTitle).forEach(function(){})
-        console.log(result)
+        //console.log(result)
         //console.log(complete.text())
      })
 
-      .catch(error => {console.log(error)
+      .catch(error => {
+        console.log(error, "Error fetching url for scrap")
         result.push({error})
         }
       );
       
-      console.log(result, "result for return")
+      //console.log(result, "result for return")
       return result
 }

@@ -6,15 +6,21 @@ import MainTable from '../components/tables/MainTable'
 import UserData from '../components/tables/UserData'
 import {ModalData, useModal} from '../components/ModalData'
 import { sortData } from '../selectors/sortData';
-import FormData from '../components/FormData';
+import FormPasswordChange from '../components/forms/FormPasswordChange';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
 import {sources} from '../settings/config'
 import CreateButton from '../components/CreateButton';
+import {Card} from 'react-bootstrap'
 
 
-const Profile = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) => {
+const Profile = ({result, fetchCrudApi, loading, auth}) => {
 
+    const style={
+        display: "flex",
+        justifyContent: "center",
+        margin: 150
+    }
     // const {show, handleShow, handleClose, data, setData} = useModal()
     // const [action, setAction] = useState('list')
     // const columns = 
@@ -24,83 +30,56 @@ const Profile = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort
     //     'Role',
     //     'Status',
       
-    // ]
-
-    
-    
-    // useEffect(() => {
+    // ]    
+    useEffect(() => {
         
-    //     fetchCrudApi(sources.UsersUrl,'get',null)
+        fetchCrudApi(`${sources.UsersUrl}${auth.id}`,'get',null)
     //     //console.log(action, "Form action")
-    //     }, [])
+    }, [])
 
-    // return (
-    //     <div>
-    //         <Title content={'Users List'}/>
-    //         <CreateButton
-    //         handleShow={handleClose}
-    //         setAction={setAction}
-    //         />
-    //         <MainTable
-    //         columns={columns}
-    //         handleShow={handleShow}
-    //         loading={loading}
-    //         setAction={setAction}
-    //         setSort={setSort}
-    //         >   
-    //             <UserData 
-    //             setData={setData}
-    //             fetchCrudApi={fetchCrudApi}
-    //             result={result}
-    //             colLength={columns.names.length}
-    //             handleShow={handleShow}
-    //             setAction={setAction}
-    //             />
-    //         </MainTable>
-    //         <ModalData show={show} handleClose={handleClose} title={action}>
-    //             {action === 'create' ?
-    //                 <FormData data={{ name: '', price: '', quantity: '', description: ''}}
-    //                 fetchCrudApi={fetchCrudApi}
-    //                 action={'post'}   
-    //                 />
-    //             :    
-    //             action === 'update' && data ?
-    //                 <FormData data={{ 
-    //                     _id: data._id,
-    //                     name: data.name, 
-    //                     price: data.price, 
-    //                     quantity: data.quantity, 
-    //                     description: data.description}}
-    //                     fetchCrudApi={fetchCrudApi}
-    //                     action={'patch'}   
-    //                     />
-    //             :                                
-    //             action === 'list' && data ? 
-    //             <>
-    //                 <p>{data.username}</p>
-    //                 <p>{data.role}</p>
-    //                 <p>{data.created}</p>
-    //             </>    
-    //             :
-    //                 <p>NO DATA</p>
-    //             }
-    //         </ModalData>         
-           
-    //     </div>
-    // )
-    // }
+    return (
+        <>
+        {result ?
+
+            result.map( (user) => (
+            <Card style={style}>
+                <Card.Header><h3>My profile</h3></Card.Header>
+                <Card.Body>
+                    <p>{user.username}</p>
+                    <p>{user.email}</p>
+                    <p>{user.created}</p>
+                    <p>{user.updated}</p>
+                    <p>{user.role}</p>
+                    <p>{user.active}</p>
+                    <FormPasswordChange 
+                        data={{ 
+                        password: '',
+                        passwordConfirmation: ''
+                        }}
+                        fetchCrudApi={fetchCrudApi}
+                        formType={'change password'}
+                        action={'patch'}
+                        id={auth.id}
+                    />
+                </Card.Body>
+            </Card>
+
+            ))
+            :
+            <p>NO DATA</p>
+        }
+        </>
+    )
+}
 
     const mapStateToProps = (state) => ({
     result: sortData(state.example), 
-    sortKey: state.example.sortKey,
-    sortDirection: state.example.sortDirection,
     loading: state.example.loading, 
     auth: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
     fetchCrudApi: (url, method, data) => dispatch(fetchCrudApi(url, method, data)),
-    setSort: sortkey => dispatch(setSort(sortkey))
     })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Profile))

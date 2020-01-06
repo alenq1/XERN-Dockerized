@@ -6,13 +6,16 @@ import {
     REGISTERING_USER,
     REGISTERED_USER,
     ERROR_REGISTER,    
+    GET_PROFILE
 } from '../constants/action-types'
   
   const initialState = {
   
     username: 'anonymous',
+    id: null,
     loading: false,
     error: '',
+    details: {},
     status: 'logout'
   
   }
@@ -27,32 +30,23 @@ import {
         return {
           // IF DONT WANT KEEP THE PREVIOUS STATE WHILE LOADING
           ...state,
-          loading: true
-  
+          loading: true 
         }
   
       case LOGGED_USER:
           //console.log(action.payload, "logged user action avalue")
           return {
             ...state,
-            username: action.payload,
+            username: action.payload.username,
+            id: action.payload.id,
             loading: false,
             error: '',
-            status: 'logged',
-
-    
+            status: 'logged'
           };
       
       case LOGOUT_USER:
         //console.log( "logout action")
-        return {
-          ...state,
-          username: 'anonymous',
-          loading: false,
-          status: 'logout'
-
-  
-        };
+        return initialState;
   
       case ERROR_LOGIN:
         //console.log(action.payload, "error login action")
@@ -62,18 +56,22 @@ import {
           loading: false,
           status: 'logout',
           error: action.payload
-    
-       };
+        };
   
-       case REGISTERED_USER:
+      case REGISTERED_USER:
         //console.log(action.payload, "register user action values")
         return {
           ...state,
           username: action.payload,
           loading: false,
           status: 'registered',
+        }; 
 
-  
+        case GET_PROFILE:
+        //console.log(action.payload, "register user action values")
+        return {
+          ...state,
+          details: action.payload
         }; 
   
       case ERROR_REGISTER:
@@ -85,11 +83,9 @@ import {
           loading: false
         }
   
-      
       default:
-  
         return state
-  
     }
   }
-  export default userReducer;
+  
+export default userReducer;

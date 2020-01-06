@@ -29,51 +29,40 @@ export const ConnectWS = (wsUrl) => dispatch => {
         }
     
     io.emit('sendMessage', message, 
-    dispatch({ type: WS_MESSAGE_SENT, payload: message  })
+        dispatch({ type: WS_MESSAGE_SENT, payload: message  })
     )
 
     io.on('showMessage', message => {
     //console.log(message, "FROM WSSOCKET SERVER MESSAGE")
-    
-    dispatch({
-        type: WS_MESSAGE_RECEIVED,
-        payload: message.message
-    })
-
-
+        dispatch({
+            type: WS_MESSAGE_RECEIVED,
+            payload: message.message
+        })
     })
 
     io.on('jobMessage', message => {
-
-//        console.log(message, "WEATHER JOB DATA");
+        //console.log(message, "WEATHER JOB DATA");
         dispatch({
             type: WS_JOB_RECEIVED,
             payload: message.message
         })
-    
-
-        })
+    })
 
     io.on('otherjobMessage', message => {
-
             //console.log(message, "OTHER JOB SCRAP");
-            dispatch({
-                type: WS_OTHERJOB_RECEIVED,
-                payload: message.message
-            })
-        
-
-            })
-
-
+        dispatch({
+            type: WS_OTHERJOB_RECEIVED,
+            payload: message.message
+        })        
+    })
 
     io.on("disconnect", ()=>{ {
         //console.log("WS DISCONNECTED");
-    dispatch({ type: WS_DISCONNECTED })
-    
-}})    
+        dispatch({ type: WS_DISCONNECTED })
+    }})    
 
     io.on('error', error => {
-    dispatch({ type: WS_ERROR, payload: error })})    
+        dispatch({ type: WS_ERROR, payload: error })
+    })    
     
 }

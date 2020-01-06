@@ -17,6 +17,22 @@ export const sources = {
     logo: require('../layout/imgs/mern.png')
 }
 
+export const display = {
+
+    crudNamesCols:  [
+        'Name',
+        'Price',
+        'Quantity',
+        'Description',
+    ],
+    usersNamesCols:     [
+        'Username',
+        'Email',
+        'Role',
+        'Active',
+    ]
+}
+
 export const dataTest = {
     id: 1,
     message: "Display Test Data"    

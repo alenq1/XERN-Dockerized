@@ -8,7 +8,7 @@ mongoose.connect(config.services.db,
                   useUnifiedTopology: true
                 })
 
-.catch(error => console.log(error, "CONNECT ERROR"))
+.catch(error => console.log(error, "DATABASE CONNECT ERROR"))
 
 mongoose.Promise = global.Promise;
 const db = mongoose.connection

@@ -6,30 +6,31 @@ import MainTable from '../components/tables/MainTable'
 import CrudData from '../components/tables/CrudData'
 import {ModalData, useModal} from '../components/ModalData'
 import { sortData } from '../selectors/sortData';
-import FormData from '../components/FormData';
+import FormData from '../components/forms/FormData';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
-import {sources} from '../settings/config'
+import {sources, display} from '../settings/config'
 import CreateButton from '../components/CreateButton';
 
+
+// export const crudNamesCols = [
+//     'Name',
+//     'Price',
+//     'Quantity',
+//     'Description',
+  
+// ]
 
 const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) => {
 
     const {show, handleShow, handleClose, data, setData} = useModal()
     const [action, setAction] = useState('list')
-    const columns = {names:
-        [
-        'Name',
-        'Price',
-        'Quantity',
-        'Description',
-      
-    ],
+    const crudColumns = {
+        names: display.crudNamesCols,
     sortKey,
     sortDirection
 }
-    
-    
+        
     useEffect(() => {
         
         fetchCrudApi(sources.dataAdmin,'get',null)
@@ -39,34 +40,35 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
     return (
         <div>
             <Title content={'CRUD Example'}/>
-            {/* <CreateButton
-            handleShow={handleClose}
-            setAction={setAction}
-            /> */}
-            <MainTable
-            columns={columns}
-            handleShow={handleShow}
-            loading={loading}
-            setAction={setAction}
-            setSort={setSort}
-            >   
-                <CrudData 
-                setData={setData}
-                fetchCrudApi={fetchCrudApi}
-                result={result}
-                colLength={columns.names.length}
+            <CreateButton
                 handleShow={handleShow}
                 setAction={setAction}
+            /> 
+            <MainTable
+                columns={crudColumns}
+                handleShow={handleShow}
+                loading={loading}
+                setAction={setAction}
+                setSort={setSort}
+            >   
+                <CrudData 
+                    setData={setData}
+                    fetchCrudApi={fetchCrudApi}
+                    result={result}
+                    colLength={crudColumns.names.length}
+                    handleShow={handleShow}
+                    setAction={setAction}
                 />
             </MainTable>
             <ModalData show={show} handleClose={handleClose} title={action}>
-                {action === 'create' ?
+                {   action === 'create' ?
                     <FormData data={{ name: '', price: '', quantity: '', description: ''}}
-                    fetchCrudApi={fetchCrudApi}
-                    action={'post'}   
+                        fetchCrudApi={fetchCrudApi}
+                        action={'post'}
+                        handleClose={handleClose}
                     />
                 :    
-                action === 'update' && data ?
+                    action === 'update' && data ?
                     <FormData data={{ 
                         _id: data._id,
                         name: data.name, 
@@ -74,10 +76,11 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                         quantity: data.quantity, 
                         description: data.description}}
                         fetchCrudApi={fetchCrudApi}
+                        handleClose={handleClose}
                         action={'patch'}   
-                        />
+                    />
                 :                                
-                action === 'list' && data ? 
+                    action === 'list' && data ? 
                 <>
                     <p>{data.name}</p>
                     <p>{data.price}</p>

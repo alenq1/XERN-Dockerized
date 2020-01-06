@@ -1,7 +1,8 @@
 import {Router, Request, Response, RouterOptions} from 'express'
 import { getData, getAll, updateData, deleteData, createData } from '../controllers/crud'
-import { register, login, refreshToken, listUsers, updateUser } from '../controllers/user'
+import { register, login, refreshToken, listUsers, updateUser, userProfile, deleteUser } from '../controllers/user'
 import { validateRefreshToken, validateAccessToken } from '../middlewares/validateTokens'
+import {checkUpdateUser} from '../middlewares/checkUpdateUser'
 import { testApi, scrap } from '../controllers/test'
 
 
@@ -33,8 +34,9 @@ routes.route('/login/').post(login)
 routes.route('/tkrefresh/').post(validateRefreshToken, refreshToken)
 routes.route('/users/').get(validateAccessToken, listUsers)
 routes.route('/users/:id')        
-        .patch(validateAccessToken, updateUser)
-
+        .get(validateAccessToken, userProfile)
+        .patch(validateAccessToken, checkUpdateUser,  updateUser)
+        .delete(validateAccessToken, deleteUser)
 
 
 

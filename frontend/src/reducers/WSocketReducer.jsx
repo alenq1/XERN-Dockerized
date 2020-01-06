@@ -12,7 +12,6 @@ const initialState = {
         job: [],
         otherjob: []
     },
-
     error: '',
     status: 'disconnected'
 };
@@ -69,7 +68,6 @@ const WSocketReducer = (state = initialState, action) => {
                 status: 'message received'
             };
     
-
         case WS_DISCONNECTED:
             return {
                 ...state,

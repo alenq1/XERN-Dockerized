@@ -33,9 +33,9 @@ const DataTables = ({result, setData, fetchCrudApi, handleShow, setAction, colLe
     
             result.map(field =>(
                 <React.Fragment 
-                key={field._id}
+                
                 >
-                <tr>
+                <tr key={field._id}>
                     <td>{field.username}</td>
                     <td>{field.email}</td>  
                     <td>
@@ -82,9 +82,8 @@ const DataTables = ({result, setData, fetchCrudApi, handleShow, setAction, colLe
                                 confirmButtonText: 'Yes, delete it!'
                             })
                             .then(async(result) => {
-                                if (result.value) {
-                
-                            fetchCrudApi(`${sources.UsersUrl}${field._id}`, 'delete')
+                                if (result.value) {            
+                                fetchCrudApi(`${sources.UsersUrl}${field._id}`, 'delete')
                                 }})                                            
                             }}>
                         <FaTrash/>

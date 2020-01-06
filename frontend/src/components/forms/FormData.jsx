@@ -1,33 +1,41 @@
 import React from 'react'
 import { Formik, Field, ErrorMessage } from 'formik';
 import {Col, InputGroup, Button, Form} from 'react-bootstrap'
-import ValidateFormData from '../helpers/ValidateFormData'
+import ValidateFormData from '../../helpers/ValidateFormData'
 import Swal from 'sweetalert2'
-import {sources} from '../settings/config'
+import {sources} from '../../settings/config'
 
 
+const FormData = ({data, fetchCrudApi, action, handleClose}) => {
 
-const CreateButton = () => {
+  const CreateButton = () => {
 
-  return(
-  <center><Button type="submit" className='mt-3' variant='success'>
-      Create
+    return(
+    <center>
+      <Button 
+        type="submit" 
+        className='mt-3' 
+        variant='success'     
+      >
+        Create
       </Button>
-      </center>)
-}
-
-const UpdateButton = () => {
-
-  return(
-  <center><Button type="submit" className='mt-3' variant='warning'>
-      Update
+    </center>)
+  }
+  
+  const UpdateButton = () => {
+  
+    return(
+    <center>
+      <Button 
+        type="submit" 
+        className='mt-3' 
+        variant='warning'        
+      >
+        Update
       </Button>
-      </center>)
-}
-
-
-const FormData = ({data, fetchCrudApi, action}) => {
-
+    </center>)
+  }
+  
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
     //console.log(data.email, "email value")
@@ -35,35 +43,33 @@ const FormData = ({data, fetchCrudApi, action}) => {
 
     return (
       <Formik
-      validationSchema={ValidateFormData}
-      onSubmit={
-        (values, actions) => {
+        validationSchema={ValidateFormData}
+        initialValues={data}
+        onSubmit={
+          (values, actions) => {
           
-          if(action === 'post'){
-          fetchCrudApi(sources.dataAdmin, action, values)
-          //console.log(sources.datAdmin, action, values, "create action values")
-          }
-          else if(action === 'patch'){
-            fetchCrudApi(sources.dataAdmin+data._id, action, values)
-          //console.log(sources.dataAdmin, action, values, "update action values")
+            if(action === 'post'){
+              fetchCrudApi(sources.dataAdmin, action, values)
+            //console.log(sources.datAdmin, action, values, "create action values")
+              handleClose()
             }
-          else{
-            Swal.fire({
-              title: 'Error!',
-              text: `This is Action ${action}`,
-              icon: 'error',
-              confirmButtonText: 'Cool'
-            })
+            else if(action === 'patch'){
+              fetchCrudApi(sources.dataAdmin+data._id, action, values)
+            //console.log(sources.dataAdmin, action, values, "update action values")
+              handleClose()
+            }
+            else{
+              Swal.fire({
+                title: 'Error!',
+                text: `The action ${action} is invalid`,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
+            }          
+            //actions.setSubmitting(false);          
           }
-          
-            //actions.setSubmitting(false);
-          
         }
-        
-        
-        }
-      initialValues={data}
-    >
+      >
       {({
         handleSubmit,
         handleChange,
@@ -73,9 +79,7 @@ const FormData = ({data, fetchCrudApi, action}) => {
         isValid,
         errors,
       }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-
-            
+        <Form noValidate onSubmit={handleSubmit}>            
             <Form.Group controlId="validationFormikName">
               <Form.Label>Name</Form.Label>
               <InputGroup>
@@ -132,19 +136,15 @@ const FormData = ({data, fetchCrudApi, action}) => {
                 onChange={handleChange}
                 isInvalid={!!errors.description}
               />
-
               <Form.Control.Feedback type="invalid">
                 {errors.description}
               </Form.Control.Feedback>
             </Form.Group>
-
-          <Form.Group>
-            
+          <Form.Group>            
           </Form.Group>
         {action === 'post' && <CreateButton/>}
         {action === 'patch' && <UpdateButton/>}
         </Form>
-
       )}
     </Formik>
     );
