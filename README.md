@@ -1,4 +1,4 @@
-# MERN Dockerized Boilerplate
+# XERN Dockerized Boilerplate
 
    - This project is made for build and fast deploying of React frontend and Node Backend
    - It counts with the following stack:
@@ -7,22 +7,25 @@
        - React 
          - Redux
          - Selectors, Thunk, Persist
-         - Bootstrap
+         - Styled Components and some Bootstrap
          - React Router
          - Forms handling and validation with Formik and Yup
          - Socket.io Client Side        
          - Other libarires
         
-      
      ## Backend Site
        - Express 4
            - Express Middlewares, routes, controllers
-         - Database backend with mongodb
+         - Database backend support for mongodb and SQL databases (MySQL, Postgres)
            - Mongoose
+           - TypeORM 
            - Schema and methods
            - Crud and User management
+           - Shared Functions 
+           - Easy Switch for Database service
          - Login and Register
-           - Authentication with JWT 
+           - Authentication with JWT
+           - Authorization User roles
            - Acesss Token
            - Refresh Token
          - BackGround and Scheduled Tasks
@@ -39,14 +42,12 @@
            - Joi for data validation
            - Cors Headers
            
-        
      ## Additional Stack
        - Proxy with nginx
        - Bull Board for Monitor tasks
        - Typescript partial support
        - Hot reaload with ts-node and nodemon
 
-        
      ## Deploy tools
        - Docker 
        - Docker Compose
@@ -58,14 +59,14 @@
 
   ## Docker way
   
-  The docker compose file has a base template image for backend services, and proxy for serve static files, redis for channels and celery tasks, and optional postgres database to save the data if it needed 
+  The docker compose file has a base template image for backend services, and proxy for serve static files, redis for socket.io and bull queue for tasks.
 
   You need to have installed docker and docker-compose to run this project
-     
+  
   if you have docker and docker-compose installed you need to build images in docker-compose and custom Dockerfiles in the backend and frontend folders
 
     docker-compose build 
-      
+  
   After download and build the images just run the app with the command.
 
     docker-compose up -d
@@ -79,7 +80,7 @@
     export DOCKER_CLIENT_TIMEOUT=120
     export COMPOSE_HTTP_TIMEOUT=120
 
-  
+
 # Services Check
 
   Once all containers are up and running just check the services status on the home page site http://localhost:3000/, and now you can see the service check page
@@ -93,6 +94,7 @@
   - A button link to the Bull Board monitor for scheduled tasks running (see backend/src/app/app.ts to disable/enable)
   - A button link to the Crud page for manipulate data after login
   - Websocket and scrap example page 
+
   
 
   ## Stand Alone (Buscar Nombre)
