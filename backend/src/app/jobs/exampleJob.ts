@@ -7,7 +7,7 @@ export const singlejob: Ijobs = {
   action: fetchWeather,
   options: {
     repeat: {
-      every: 60000,
+      every: 30000,
       removeOnComplete: true
     }
   },

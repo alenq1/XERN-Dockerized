@@ -8,13 +8,13 @@ const PrivateRoute = ({children, auth}) => {
     //console.log(auth.username, "User");
     //console.log(auth.status, "Status");
     return(         
-        <>
+        <React.Fragment>
           {auth.username !== 'anonymous' && auth.status !== 'logout' ? 
             children
-          :
+            :
             <Redirect to='/login' />
           }
-        </>
+        </React.Fragment>
     )
 }
 

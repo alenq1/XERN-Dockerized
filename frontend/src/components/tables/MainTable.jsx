@@ -1,66 +1,55 @@
 import React, {memo} from 'react'
-//import {connect} from 'react-redux'
 import {Table, Button, Spinner} from 'react-bootstrap';
 import {FaTrash, FaInfoCircle, FaEdit, FaPlusSquare} from 'react-icons/fa'
-//import {ModalData, useModal} from './ModalData';
-//import { setSort } from '../actions/sort';
 import {FaSortAmountUp, FaSortAmountDown} from 'react-icons/fa'
 import {sources} from '../../settings/config'
 import Swal from 'sweetalert2'
-//import fetchCrudApi from '../actions/fetchCrudApi'
+import styled from 'styled-components'
+
+
+const StyledMainTable = styled.div`
+
+margin: 2rem 2rem 2rem 4rem; 
+
+
+table {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3); 
+    max-width: 95%;
+    justify-content: center;
+    text-align: center;         
+}
+
+thead {
+            
+    background-color: black;
+    color: white;
+    
+    }
+
+@media screen and (max-width: 550px) {
+
+margin: 2rem 1rem; 
+
+table {
+    
+    }
+
+}
+
+`
 
 const MainTable = (
     {result, columns, handleShow, setData, fetchCrudApi, loading, setAction, setSort, children}) => {
 
     const style =  {
-        //marg
-        table:{
-             maxWidth: '95%',
-             justifyContent: 'center',
-             marginTop: 45,
-             marginLeft: 45,
-             textAlign: 'center',         
-        }   ,
-        thead: {
-            
-            backgroundColor: 'black',
-            color: 'white'
-        },
-        btnCreate: {
-            //marginLeft: '50%',
-            //marginRight: '50%'
-            marginLeft: '47%', 
-            
-        },
-        btnActions:{
-            marginRight: 10
-        },
-        tdLoading:{
-            padding: 100
-        },
-        spinner:{
-            width: 100, 
-            height: 100
-        }
+    
+
     }
     //console.log(result, "pssed data");        
     console.log(columns.names.length, "COL LENGTH");
     return (
-        <React.Fragment style={style}>
-{/*         
-            <Button variant='success'
-                style={style.btnCreate}
-                onClick={() => {                                    
-                console.log("PUSHED BUTTON CREATE")
-                handleShow()
-                setAction('create')
-            }}>
-                <FaPlusSquare/>
-                Create      
-            </Button> */}
-            <Table  striped hover borderless responsive
-                style={style.table}
-            >
+        <StyledMainTable>
+            <Table  striped hover borderless responsive style={style.table}>
                 <thead style={style.thead}>
                     <tr>
                         { columns && 
@@ -80,17 +69,18 @@ const MainTable = (
                 </thead>
                 <tbody>                    
                     { 
-                    loading ?
-                    <tr>
-                        <td colSpan={columns.names.length + 1} style={style.tdLoading}>
-                            <h1>Loading <Spinner animation="border" variant="dark" style={style.spinner}/></h1>
-                        </td>  
-                    </tr>
-                    :                    
-                    children}            
+                        loading ?
+                        <tr>
+                            <td colSpan={columns.names.length + 1} style={style.tdLoading}>
+                                <h1>Loading <Spinner animation="border" variant="dark" style={style.spinner}/></h1>
+                            </td>  
+                        </tr>
+                        :                    
+                        children
+                    }            
                 </tbody>                               
             </Table>            
-        </React.Fragment>         
+        </StyledMainTable>         
     )
 }
 // const mapDispatchToProps = dispatch => ({

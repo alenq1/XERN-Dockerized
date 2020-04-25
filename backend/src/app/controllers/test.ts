@@ -7,6 +7,9 @@ import {newJobs} from '../helpers/queuelist'
 
 const {urls: {externalApi, scrapUrls}} = config
 
+
+// CONTROLLER FOR CHECK BACKEND REQUEST TO EXTERNAL API
+
 export const testApi = async (req:Request,res:Response) => {
 
     //console.log(req.body)
@@ -22,9 +25,13 @@ export const testApi = async (req:Request,res:Response) => {
     }
 }
 
+// EXECUTE JOB FOR SCRAP PAGE 
+
 export const scrap = async (req:Request,res:Response) => {
+    
     try{
-        await newJobs.TestJob.queue.add({url: scrapUrls[Math.floor(Math.random()*scrapUrls.length)]})
+        
+        await newJobs.TestJob.queue.add({url: `${scrapUrls.site}${scrapUrls.channels[Math.floor(Math.random()*scrapUrls.channels.length)]}`})
         res.status(200).send(customResponse('ok', 'initializing page scrap...'))
     }
     catch (error){

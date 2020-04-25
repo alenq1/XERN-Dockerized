@@ -22,7 +22,7 @@ io.on('connection', socket => {
         //console.log(message, "FROM CLIENT") 
         socket.emit('showMessage', {name: 'USER', message: 'Receiving PONG'})})
         //io.broadcast.emit('showMessage', { name: 'USER', message: 'Receiving PONG' })
-   
+
         newJobs.Weather.queue.on('global:completed', (job, result) => {
   
             //console.log(`Job completed with resultttttttttttttttttttt ${result}`);
@@ -31,7 +31,8 @@ io.on('connection', socket => {
             //console.log(result, "Weather socket sended")
             )
           })
-        newJobs.TestJob.queue.on('global:completed', (job, result) => {
+        
+          newJobs.TestJob.queue.on('global:completed', (job, result) => {
   
             //console.log(`Job completed with result ${result}`);
             //console.log(job, "Job completed state");

@@ -8,9 +8,9 @@ const ValidateFormLogin = Yup.object({
         .required('Field Required'),
 
     password: Yup.string()
-         .min(6, 'Min is 6 Chars')
-         .max(100, 'Max is 100 Chars')
-         .required('Password Required'),
+        .min(6, 'Min is 6 Chars')
+        .max(100, 'Max is 100 Chars')
+        .required('Password Required'),
     //repeat_password: Yup.ref('password'),
     email: Yup.string()
         .email()

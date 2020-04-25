@@ -11,8 +11,7 @@ const routes: Router = Router()
 
 export const customResponse: any = (status: string, message: any) => {
     return {status, message}
-    }
-
+}
 
 //basic routes
 routes.get('/health/', (req: Request, res: Response) => res.status(200).send(customResponse('ok', 'active')))
@@ -36,8 +35,6 @@ routes.route('/users/').get(validateAccessToken, listUsers)
 routes.route('/users/:id')        
         .get(validateAccessToken, userProfile)
         .patch(validateAccessToken, checkUpdateUser,  updateUser)
-        .delete(validateAccessToken, deleteUser)
-
-
+        .delete(validateAccessToken,  deleteUser)
 
 export default routes

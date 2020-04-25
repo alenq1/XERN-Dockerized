@@ -10,15 +10,39 @@ import FormData from '../components/forms/FormData';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
 import {sources, display} from '../settings/config'
-import CreateButton from '../components/CreateButton';
+import Loading from '../components/Loading'
+import styled from 'styled-components'
+
+const StyledUsers = styled.div`
+
+    .create-button {
+        margin: 0% 45%;
+    }
 
 
-// export const usersNamesCols =     [
-//     'Name',
-//     'Mail',
-//     'Role',
-//     'Status',
-//   ]
+@media screen and (max-width: 550px) {
+   
+   
+    h1 {
+       font-size: 1.5rem;
+    }
+
+    .create-button {
+        margin: 5% 35%;
+    }
+
+    .main-table {
+
+        font-size: .75rem;
+
+        table {
+            margin: 0;
+        }
+    }
+}
+
+
+`
 
 const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) => {
 
@@ -30,16 +54,21 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
         sortDirection
     }
     
-    
-    useEffect(() => {
+        useEffect(() => {
         
         fetchCrudApi(sources.UsersUrl,'get',null)
         //console.log(action, "Form action")
         }, [])
+        
 
     return (
+
+        <StyledUsers>
+        {loading === true ? <Loading message={'Loading'}/>
+        :
         <div>
             <Title content={'Users List'}/>
+            <div className="main-table">
             <MainTable
                 columns={usersColumns}
                 handleShow={handleShow}
@@ -56,6 +85,7 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                     setAction={setAction}
                 />
             </MainTable>
+            </div>
             <ModalData show={show} handleClose={handleClose} title={action}>
                 {action === 'create' ?
                     <FormData data={{ name: '', price: '', quantity: '', description: ''}}
@@ -85,6 +115,8 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                 }
             </ModalData>         
         </div>
+}
+        </StyledUsers>
     )
     }
 

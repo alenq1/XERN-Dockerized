@@ -8,13 +8,13 @@ import {
     
 } from '../constants/action-types'
 import axios from 'axios'
-import {store} from '../store/store'
 import Swal from 'sweetalert2'
 import {LoggedOut} from './userAuth'
 import {sources} from '../settings/config'
-//import adapter from 'axios/lib/adapters/http'
 import {hist}from '../layout/Main';
-const STATE = store.getState()
+//import {store} from '../store/store'
+//import adapter from 'axios/lib/adapters/http'
+//const STATE = store.getState()
 
 
 //axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
@@ -29,13 +29,19 @@ axios.interceptors.response.use(function (response) {
     //console.log(error, 'First Resquest Error')
       return Promise.reject(error)
     }
+    
+    //PREVENT INFINITE LOOP WITH A LOGOUT,  
+    //EX: WHEN TOKEN EXPIRED AND TRY REFRESH
+    
     if(error.response.status === 401 && error.config.url === sources.refreshUrl){
       //console.log(error, 'Second reject error')
-      hist.push("/login")
-      sessionStorage.clear()
       LoggedOut()
+      //hist.push("/login")
+      sessionStorage.clear()      
       return Promise.reject(error);
     }
+
+    // RETRY TO GET REFRESH TOKEN
 
     if (error.response.status === 401 && !originalRequest._retry) {
     
@@ -47,7 +53,6 @@ axios.interceptors.response.use(function (response) {
         method: 'post',
         url: sources.refreshUrl, 
         headers: {'refresh-token': sessionStorage.getItem('refresh-token')}
-        
       })
         .then((responseData) => {
         
@@ -61,9 +66,9 @@ axios.interceptors.response.use(function (response) {
         .catch((error) => {
         //console.log(sessionStorage.getItem('access-token'), sessionStorage.getItem('refresh-token'), 'tokens after error response')
         //console.log(error.response, 'finally error')
-          hist.push("/login")
           sessionStorage.clear()
           LoggedOut()
+          //hist.push("/login")
           return Promise.reject(error);
         });
   }
@@ -92,7 +97,7 @@ axios.interceptors.response.use(function (response) {
   else {
   //
   //console.log(error, 'interceptor finally error cause')
-    hist.push("/login")
+  //hist.push("/login")
     sessionStorage.clear()
     LoggedOut()
     return Promise.reject(error)
@@ -105,12 +110,11 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
   
   //console.log(STATE.example, "app state");
   axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
-    //console.log(url, "URL");
-    //console.log(method, "METHOD");
-    //console.log(data, "DATA TO FETCH");
-    if(method === 'get'){
+  console.log({url, method, data}, "VALUES TO FETCH");
+  
+  if(method === 'get'){
     dispatch({ type: LOADING_DATA })
-    }
+  }
   
     await axios(
       {
@@ -124,11 +128,10 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
       .then(response => {
         
         if(method === 'get'){
-          {
-          console.log(response.data, "GET DATA STATE");  
-          dispatch({ type: FETCH_DATA, payload: response.data.message })
           
-          }
+          console.log(response.data, "GET DATA STATE");  
+          dispatch({ type: FETCH_DATA, payload: response.data.message })          
+          
         }
         if(method === 'post'){
             console.log(response.data, "CREATE STATE");

@@ -1,88 +1,110 @@
 import React from 'react'
 import { Nav, Navbar, Button, DropdownButton, Dropdown, Image } from 'react-bootstrap'
 import { Redirect, withRouter, NavLink, Link } from 'react-router-dom'
+
 import {connect} from 'react-redux'
 import {sources} from '../settings/config';
 import {LoggedOut} from '../actions/userAuth';
-import Swal from 'sweetalert2'
+import SessionButton from '../components/buttons/SessionButton';
+import LoginButton from '../components/buttons/LoginButton';
+import styled from 'styled-components';
 
 
-const style ={
 
-  position: 'sticky',
-  backgroundColor: 'black'
+const StyledHeader = styled.nav`
 
+
+position: fixed;
+background-color: black;
+top: 0;
+width: 100%;
+display: flex;
+height: 4rem;
+z-index: 3;
+
+img{
+  width: 8.5rem;
+  height: 5rem;
+  margin-left: 4rem;
+  margin-top: -.5rem;  
 }
 
-const Header = ({username, history, LoggedOut}) => {
+.header-title {
+  margin: auto 1rem;
+  text-decoration: none;
+  color: white;
+}
+
+.buttons {
+  margin: .7rem 1rem .3rem auto;
   
+  
+  button {
+    background: transparent;
+  }
+
+  svg{
+    width: 1.5rem;
+    height: 1.5rem;
+    margin:  0 .5rem;
+  }
+}
+
+.no-buttons {
+  button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  
+.header-title, .login-text, .session-username{
+  display: none;
+}
+
+img {
+  width: 8.5rem;
+  height: 5rem;
+  margin-left: 0rem;
+  padding: .5rem; 
+}
+
+}
+`
+
+
+const Header = ({username, status, LoggedOut, history}) => {
+  
+  //if(history.location.pathname ==='/login'){return null}
   
   return (
     
-    <Navbar sticky='top' style={style} variant="dark">
-      <NavLink to="/">
-        <Navbar.Brand className="ml-2">
-          <Image
-            src={sources.logo}
-            width="115"
-            height="45"        
-            alt="MERN Boilerplate"
-            rounded
-            className="mr-3"
-          />
+    <StyledHeader>
+      {console.log(history.location.pathname, 'history EN HEADER')}
+      <img src={sources.logo} alt="MERN Boilerplate"/>
+      <NavLink to="/" className="header-title">
             Boilerplate
-        </Navbar.Brand>
-      </NavLink>
-      <Nav className="ml-2 mr-auto">      
-      </Nav>
-    
-      <Nav>
-      {
-      username !== 'anonymous' ? 
-      
-        <DropdownButton alignRight
-          title={username}  
-          id="dropdown-menu-align-right">
-    
-          <Dropdown.Item eventKey="0" onClick={() => history.push('/')} >        
-            Home
-          </Dropdown.Item>        
-          <Dropdown.Item eventKey="1" onClick={() => history.push('/profile')}>
-            Profile        
-          </Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item onSelect={function (){
-            
-            Swal.fire({
-              title: 'Are you sure?',
-              text: "You Want logout??",
-              icon: 'question',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, Log out!'
-            }).then((result) => {
-              if (result.value) {
-                LoggedOut()
-              }
-            })      
-          }}> Logout
-          </Dropdown.Item>
-      </DropdownButton>
-        : 
-      <Button onClick={(e) =>           
-          history.push("/login")        
-        }>
-          login
-      </Button>
-      }
-    </Nav>    
-  </Navbar>
+      </NavLink>      
+      <span className={history.location.pathname !== '/login' ? 'buttons': 'no-buttons'}>
+        {
+          username !== 'anonymous' && status === 'logged' ? 
+            <SessionButton 
+              username={username}
+              LoggedOut={LoggedOut}
+              status={status}
+            />        
+            : 
+            <LoginButton/>
+        }
+      </span>    
+    </StyledHeader>
   )
 }
 
 const mapStateToProps = (state) => ({
-  username: state.user.username
+  username: state.user.username,
+  status: state.user.status,
+
 })
 
 const mapDispatchToProps = dispatch => ({

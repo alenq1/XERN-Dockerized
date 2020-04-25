@@ -10,17 +10,78 @@ import FormPasswordChange from '../components/forms/FormPasswordChange';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
 import {sources} from '../settings/config'
-import CreateButton from '../components/CreateButton';
-import {Card} from 'react-bootstrap'
+import CreateButton from '../components/buttons/CreateButton';
+import CardTemplate from '../components/CardTemplate';
+import styled from 'styled-components'
+
+
+const StyledProfile = styled.div`
+
+display: flex;
+margin: 5% auto;
+justify-content: center;
+width: 100%;
+
+
+.profile-content {
+    
+    padding: 2rem 2rem .5rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+
+    span {
+        width: 50%;
+    }
+
+    .password-form {
+        width: 100vw;
+
+    }
+    
+    button {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+
+margin: 0;
+justify-content: center;
+font-size: .75rem;
+
+.profile-content {
+    
+    padding: 1rem 1rem .5rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+
+    span {
+        width: 50%;
+    }
+
+    .password-form {
+        width: 100vw;
+
+        input {
+            height: 1.5rem;
+        }
+    }
+    
+    button {
+        margin: 1;
+        width: 75%;        
+        font-size: .75rem;
+    }
+}
+
+}
+
+`
 
 
 const Profile = ({result, fetchCrudApi, loading, auth}) => {
 
-    const style={
-        display: "flex",
-        justifyContent: "center",
-        margin: 150
-    }
+    
     // const {show, handleShow, handleClose, data, setData} = useModal()
     // const [action, setAction] = useState('list')
     // const columns = 
@@ -38,20 +99,19 @@ const Profile = ({result, fetchCrudApi, loading, auth}) => {
     }, [])
 
     return (
-        <>
+        <StyledProfile>
         {result ?
 
             result.map( (user) => (
-            <Card style={style}>
-                <Card.Header><h3>My profile</h3></Card.Header>
-                <Card.Body>
-                    <p>{user.username}</p>
-                    <p>{user.email}</p>
-                    <p>{user.created}</p>
-                    <p>{user.updated}</p>
-                    <p>{user.role}</p>
-                    <p>{user.active}</p>
-                    <FormPasswordChange 
+            <CardTemplate title={'MyProfile'} smWidth={'85%'}>
+                <div className='profile-content'>
+                    <span>Username</span><p>{user.username}</p>
+                    <span>Email</span><p>{user.email}</p>
+                    <span>Created at</span><p>{user.created}</p>
+                    <span>Role</span><p>{user.role}</p>
+                    <span>Status</span><p>{user.active ? 'active' : 'inactive'}</p>
+                    <div className="password-form">
+                        <FormPasswordChange 
                         data={{ 
                         password: '',
                         passwordConfirmation: ''
@@ -61,14 +121,15 @@ const Profile = ({result, fetchCrudApi, loading, auth}) => {
                         action={'patch'}
                         id={auth.id}
                     />
-                </Card.Body>
-            </Card>
+                    </div>
+                </div>
+            </CardTemplate>
 
             ))
             :
             <p>NO DATA</p>
         }
-        </>
+        </StyledProfile>
     )
 }
 

@@ -1,7 +1,7 @@
 import {Schema, model, Document} from 'mongoose'
 import jwt from 'jsonwebtoken'
 import bcryptjs from 'bcryptjs'
-import config from '../settings/config'
+import config from '../../settings/config'
 
 
 export interface IUser extends Document{
@@ -43,7 +43,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String, 
-        enum: ['Admin', 'normal', 'privileged'],
+        enum: ['admin', 'normal', 'privileged'],
         required: true,
         default: 'normal'
     },
@@ -61,8 +61,7 @@ const userSchema = new Schema({
         default: Date.now(), 
         required:true
     }
-}
-)
+})
 
 userSchema.methods.generateAccessToken = async function(user: string, id: string): Promise<any> { 
     console.log(user, "to sign access")
@@ -107,4 +106,4 @@ userSchema.methods.validatePassword = async function (password: string): Promise
     return await bcryptjs.compareSync(password, this.password);
 };
 
-export default model<IUser>('users', userSchema)
+export default model<IUser>('Users', userSchema)

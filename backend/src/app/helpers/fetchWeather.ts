@@ -14,27 +14,27 @@ export default async(job) =>{
     job.data.location.map( async(url) => {
 
     //console.log(url, "LOCATION for request")
-                promises.push(
-                  axios.get(                      
-                      urls.wheatherApi(url)                                        
-                  )
-                )
+      promises.push(
+        axios.get(                      
+          urls.wheatherApi(url)                                        
+        )
+      )
     })
   //console.log(promises, "PROMISE TO DO") 
-  await axios.all(promises)
-  .then( response => {
-    //console.log(response, "DATa FROM API"),
-    Object.values(response).map( (result: any) =>{
-    //console.log(result.data, "RESULT")
-    data.push(result.data)
-    })
-                  
-  })
-  .catch(error => {
-    console.log(error, "ERROR ON FETCH WEATHER")
-    data = error
-  })
+      await axios.all(promises)
+      .then( response => {
+        //console.log(response, "DATa FROM API"),
+        Object.values(response).map( (result: any) =>{
+        //console.log(result.statusText, "RESULT JOB FETCH WEATHER")
+        data.push(result.data)
+        })
+      })
+      
+      .catch(error => {
+        console.log(error, "ERROR ON FETCH WEATHER")
+        data = error
+      })
 
-  return Promise.resolve(data)
+return Promise.resolve(data)
   
 }

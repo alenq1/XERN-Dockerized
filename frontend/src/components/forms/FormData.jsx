@@ -4,40 +4,69 @@ import {Col, InputGroup, Button, Form} from 'react-bootstrap'
 import ValidateFormData from '../../helpers/ValidateFormData'
 import Swal from 'sweetalert2'
 import {sources} from '../../settings/config'
+import styled from 'styled-components'
 
 
-const FormData = ({data, fetchCrudApi, action, handleClose}) => {
+const StyledCreateButton = styled.div`
 
-  const CreateButton = () => {
+button {
+  margin: 2% 35%;
+  color: white;
+  text-shadow: 1px 1px darkslategray;
+  width: 150px;
+}
 
-    return(
-    <center>
-      <Button 
-        type="submit" 
-        className='mt-3' 
-        variant='success'     
-      >
-        Create
-      </Button>
-    </center>)
-  }
+@media screen and (max-width: 550px) {
+  margin: 1rem 7rem 1rem 1rem;
+}
+`
+const StyledUpdateButton = styled.div`
+
+button{
+  margin: 2% 35%;
+  color: white;
+  text-shadow: 1px 1px darkslategray;
+  width: 150px;
+}
+
+@media screen and (max-width: 550px) {
+  margin: 1rem 7rem 1rem 1rem;
+}
+`
+
+const CreateButton = () => {
+
+  return(
+  <StyledCreateButton>
+    <Button 
+      type="submit" 
+      className='mt-3' 
+      variant='success'     
+    >
+      Create
+    </Button>
+  </StyledCreateButton>)
+}
+
+
+const UpdateButton = () => {
+
+  return(
+  <StyledUpdateButton>
+    <Button 
+      type="submit" 
+
+      variant='warning'        
+    >
+      Update
+    </Button>
+  </StyledUpdateButton>)
+}
+
+
+
+const FormData = ({data, fetchCrudApi, action, handleClose, idparam}) => {
   
-  const UpdateButton = () => {
-  
-    return(
-    <center>
-      <Button 
-        type="submit" 
-        className='mt-3' 
-        variant='warning'        
-      >
-        Update
-      </Button>
-    </center>)
-  }
-  
-    // Pass the useFormik() hook initial form values and a submit function that will
-    // be called when the form is submitted
     //console.log(data.email, "email value")
     //console.log(action, "action to execute")
 
@@ -54,7 +83,7 @@ const FormData = ({data, fetchCrudApi, action, handleClose}) => {
               handleClose()
             }
             else if(action === 'patch'){
-              fetchCrudApi(sources.dataAdmin+data._id, action, values)
+              fetchCrudApi(sources.dataAdmin+idparam, action, values)
             //console.log(sources.dataAdmin, action, values, "update action values")
               handleClose()
             }
@@ -85,7 +114,7 @@ const FormData = ({data, fetchCrudApi, action, handleClose}) => {
               <InputGroup>
                 <Form.Control
                   type="text"
-                  placeholder="Name"
+                  placeholder="Ex Phone"
                   aria-describedby="inputGroupPrepend"
                   name="name"
                   value={values.name}
@@ -101,7 +130,7 @@ const FormData = ({data, fetchCrudApi, action, handleClose}) => {
               <Form.Label>Price</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="Price"
+                placeholder="0.00"
                 name="price"
                 value={values.price}
                 onChange={handleChange}
@@ -116,7 +145,7 @@ const FormData = ({data, fetchCrudApi, action, handleClose}) => {
               <Form.Label>Quantity</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="Quantity"
+                placeholder="0"
                 name="quantity"
                 value={values.quantity}
                 onChange={handleChange}
@@ -130,7 +159,7 @@ const FormData = ({data, fetchCrudApi, action, handleClose}) => {
               <Form.Label>Description</Form.Label>
               <Form.Control
                 type="textarea"
-                placeholder="Description"
+                placeholder="Ex Electronic Device"
                 name="description"
                 value={values.description}
                 onChange={handleChange}
@@ -142,8 +171,12 @@ const FormData = ({data, fetchCrudApi, action, handleClose}) => {
             </Form.Group>
           <Form.Group>            
           </Form.Group>
-        {action === 'post' && <CreateButton/>}
-        {action === 'patch' && <UpdateButton/>}
+          {
+            {
+            'post': <CreateButton/>,
+            'patch': <UpdateButton/>
+            }[action]
+          }
         </Form>
       )}
     </Formik>

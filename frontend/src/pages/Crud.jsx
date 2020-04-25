@@ -10,25 +10,55 @@ import FormData from '../components/forms/FormData';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
 import {sources, display} from '../settings/config'
-import CreateButton from '../components/CreateButton';
+import CreateButton from '../components/buttons/CreateButton';
+import Loading from '../components/Loading';   
+import styled from 'styled-components'
 
+
+const StyledCrud = styled.div`
+
+    .create-button {
+        margin: 0% 45%;
+    }
+
+
+@media screen and (max-width: 550px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .create-button {
+        margin: 5% 35%;
+    }
+
+    .main-table {
+
+        font-size: .75rem;
+
+        table {
+            margin: 0;
+        }
+    }
+}
+`
 
 // export const crudNamesCols = [
 //     'Name',
 //     'Price',
 //     'Quantity',
 //     'Description',
-  
 // ]
 
-const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) => {
+
+const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort, auth, history}) => {
 
     const {show, handleShow, handleClose, data, setData} = useModal()
     const [action, setAction] = useState('list')
     const crudColumns = {
         names: display.crudNamesCols,
-    sortKey,
-    sortDirection
+        sortKey,
+        sortDirection
 }
         
     useEffect(() => {
@@ -37,29 +67,39 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
         //console.log(action, "Form action")
         }, [])
 
+        
+
     return (
-        <div>
-            <Title content={'CRUD Example'}/>
-            <CreateButton
-                handleShow={handleShow}
-                setAction={setAction}
-            /> 
-            <MainTable
-                columns={crudColumns}
-                handleShow={handleShow}
-                loading={loading}
-                setAction={setAction}
-                setSort={setSort}
-            >   
-                <CrudData 
-                    setData={setData}
-                    fetchCrudApi={fetchCrudApi}
-                    result={result}
-                    colLength={crudColumns.names.length}
+
+        <StyledCrud>
+            {loading === true ? <Loading message={'Loading'}/>
+                :
+            <div>            
+                <Title content={'CRUD Example'}/>
+            <div className="create-button">
+                <CreateButton
                     handleShow={handleShow}
                     setAction={setAction}
-                />
-            </MainTable>
+                /> 
+            </div>
+            <div className="main-table">
+                <MainTable
+                    columns={crudColumns}
+                    handleShow={handleShow}
+                    loading={loading}
+                    setAction={setAction}
+                    setSort={setSort}
+                >   
+                    <CrudData 
+                        setData={setData}
+                        fetchCrudApi={fetchCrudApi}
+                        result={result}
+                        colLength={crudColumns.names.length}
+                        handleShow={handleShow}
+                        setAction={setAction}
+                    />
+                </MainTable>
+            </div>
             <ModalData show={show} handleClose={handleClose} title={action}>
                 {   action === 'create' ?
                     <FormData data={{ name: '', price: '', quantity: '', description: ''}}
@@ -69,15 +109,15 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                     />
                 :    
                     action === 'update' && data ?
-                    <FormData data={{ 
-                        _id: data._id,
+                    <FormData data={{                         
                         name: data.name, 
                         price: data.price, 
                         quantity: data.quantity, 
                         description: data.description}}
                         fetchCrudApi={fetchCrudApi}
                         handleClose={handleClose}
-                        action={'patch'}   
+                        action={'patch'}
+                        idparam={data._id}
                     />
                 :                                
                     action === 'list' && data ? 
@@ -88,13 +128,14 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                 :
                     <p>NO DATA</p>
                 }
-            </ModalData>         
-           
+            </ModalData>                    
         </div>
+        }
+    </StyledCrud>
     )
-    }
+}
 
-    const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
     result: sortData(state.example), 
     sortKey: state.example.sortKey,
     sortDirection: state.example.sortDirection,
@@ -105,6 +146,6 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
 const mapDispatchToProps = dispatch => ({
     fetchCrudApi: (url, method, data) => dispatch(fetchCrudApi(url, method, data)),
     setSort: sortkey => dispatch(setSort(sortkey))
-    })
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Crud))

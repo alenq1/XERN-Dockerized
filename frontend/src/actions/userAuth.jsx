@@ -77,13 +77,14 @@ export const LoginUser = (url, method='post', data) => async(dispatch) => {
         
       )
         .then(response => {
-          //console.log(response, "RESPONSE from login success")
+          console.log(response, "RESPONSE from login success")
           sessionStorage.setItem('access-token', response.data.message.accessToken)
           sessionStorage.setItem('refresh-token', response.data.message.refreshToken)
+
           dispatch({ type: LOGGED_USER, 
                     payload: {
-                     username: response.data.message.username,
-                     id: response.data.message.id
+                      username: response.data.message.username,
+                      id: response.data.message._id
                     }})
               Swal.fire({
                 title: 'LOGGIN SUCCESS!',
@@ -107,17 +108,18 @@ export const LoginUser = (url, method='post', data) => async(dispatch) => {
   
 export const LoggedOut = () => {
   
+          //console.log('LOGGED_OUT')
           sessionStorage.clear()
           //document.cookie = "tkcookie= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
           hist.push('/')
               Swal.fire({
-                 title: 'LOGGED OUT!',
-                 text: 'you exit from the app',
-                 icon: 'info',
-                 confirmButtonText: 'Ok'
-               })
-          return {type: LOGOUT_USER}                        
-            }
+                title: 'LOGGED OUT!',
+                text: 'you exit from the app',
+                icon: 'info',
+                confirmButtonText: 'Ok'
+              })
+          return {type: LOGOUT_USER}
+}
         
       
       

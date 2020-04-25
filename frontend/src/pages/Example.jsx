@@ -3,6 +3,201 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {Card, Button, Spinner} from 'react-bootstrap'
 import {sources} from '../settings/config';
+import {FaCity, FaCloud, FaSun, FaTemperatureHigh, FaTemperatureLow,FaWind, FaCloudRain, FaSnowflake,
+    FaMoon, FaRedditAlien
+} 
+
+from 'react-icons/fa'
+import {IoIosThunderstorm} from 'react-icons/io'
+import {FiCloudDrizzle} from 'react-icons/fi'
+
+import styled from 'styled-components'
+
+
+const StyledExample = styled.div`
+
+
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+        margin: 2rem auto;
+    }
+
+
+    .list-card-socket, .list-card-scrap {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .list-card-socket > div , .list-card-scrap > div{
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    }
+
+
+    .card-example-weather, .card-example-empty, .card-example-scrap  {
+        width: 25%;
+        margin: 2rem;
+        background: linear-gradient(to bottom, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+        transition: all 0.75s ease;
+    }
+
+    .weather-header{
+        display: flex;
+        flex-direction: row;
+    
+        span{
+            margin:2rem;
+            width: 40%
+        }
+    
+        h2{
+            margin: 2rem 2rem .5rem 2rem;
+            width: 60%;
+
+            svg{
+                margin-left: 2rem;
+            }
+        }
+    }
+
+    .weather-body{
+        display: flex;
+        flex-direction: row;
+    
+        span{
+            margin:.1rem;
+            width: 65%
+        }
+
+        svg {
+            width: 4rem;
+            height: 4rem;
+        }
+    
+        p {
+            margin: 2rem;
+            width: 35%;
+        }
+    }
+
+    button {
+        background: darkblue;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+        width: 9rem;
+    }
+
+
+    a {
+        text-decoration: none;
+    }
+
+    .scrap-header {
+        background: black;
+        color: whitesmoke;
+        padding: 1.5rem;
+        height: 5rem;
+    }
+
+    .scrap-body{
+    
+        margin: 2rem auto auto auto;
+        height: 100%;
+        position: relative;
+    
+        p {
+            z-index: 2;
+            position: relative;
+            margin: 2rem 1rem;
+            color: black;
+        }
+
+        svg {
+            position: absolute;
+            color: rgba(248,102,11,0.2);
+            top: 0;       
+            margin: 1rem 3rem 1rem 3rem;
+            z-index: 1;
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+
+
+    .card-example-scrap:hover{
+        background: linear-gradient(to bottom, rgba(82,82,82,1) 0%, rgba(46,46,46,1) 1%, rgba(97,97,97,0.99) 12%, rgba(110,110,110,0.88) 25%, rgba(77,77,77,0.75) 39%, rgba(20,20,20,0.61) 73%, rgba(31,31,31,0.27) 91%, rgba(46,46,46,0.09) 98%, rgba(20,20,20,0.02) 100%);
+        transform: scale(1.1);
+        p{
+            color: white;
+        }
+    }
+
+
+@media screen and (max-width: 550px) {
+
+
+    h1 {
+        font-size: 1.5rem;
+        text-align: center;
+        margin: 2rem auto;
+    }
+
+    .card-example-weather, .card-example-empty, .card-example-scrap {
+        width: 45%;
+        margin: 2rem .5rem;    
+    }
+
+    .weather-header{
+    
+        span{
+            margin: 1rem .5rem .5rem;
+            width: 40%
+        }
+    
+        h2  {
+            margin: 2rem 2rem .5rem .5rem;
+            width: 60%;
+            font-size: 1.5rem;
+
+            svg {
+                margin-left: 2rem;
+            }
+        }
+    }
+
+    .weather-body{
+
+        p{
+            margin: 2rem 2rem 2rem 1rem;
+            width: 35%;
+        }
+}
+
+    .scrap-body{
+    
+        svg {
+            margin: 1rem;
+        }
+
+        p {
+            font-size: .75rem
+        }
+
+    }
+
+    .scrap-header {
+        background: black;
+        color: whitesmoke;
+        padding: 1.5rem;
+        height: 5rem;
+    }
+} 
+
+`
 
 const Example = ({weather, scrap}) => {
 
@@ -15,38 +210,6 @@ const Example = ({weather, scrap}) => {
         .catch(error => setscrapStatus(error))
     }
     
-    const style = {
-        //justifyContent: 'center',
-        //width: 450,
-        marginRight: 35,
-        //marginTop: 100,
-        
-        title:{
-            textAlign: 'center',
-            marginTop: 50
-        },
-        card:{
-            marginRight: 50,
-            marginLeft: 50,
-            marginTop: 50,
-            width: '25%',
-            textAlign: 'center'
-        },
-        emptyCard:{
-            marginRight: 50,
-            marginLeft: 50,
-            marginTop: 50,
-            width: '25%',
-            textAlign: 'center'
-        },
-        button:{
-            width: '15%',
-            height: '15%',
-            textAlign: 'center',
-            justifyContent: 'center'
-        }
-    }
-
     
     useEffect(() => {
         
@@ -57,73 +220,87 @@ const Example = ({weather, scrap}) => {
     //console.log(scrapStatus, "SCRAP STATUS")
     //console.log(weather, "DATA WEATHER");
     return (
-        <>
-            <h3 style={style.title}>Socket Example</h3>
-            <div className="row container-fluid justify-content-center col-4 col-sm-12">
+        <StyledExample>
+            <h1>Socket Example</h1>
+            <div className="list-card-socket">
                 
                 {weather && weather.length > 0 ?
                 weather.map((data) => (
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>{data.name} </Card.Header>
-                    <Card.Body>
-                        <>
-                            <p><h5>Weather:</h5>{data.weather[0].main}</p>
-                            <p><h5>Temp:</h5>{data.main.temp}</p>
-                            <p><h5>Wind:</h5>{data.wind.speed}</p>
-                        </>                    
-                    </Card.Body>
-                </Card>
-                ) )
+                <div className="card-example-weather">
+                    <div className="weather-header">
+                        <span>{data.name}</span>
+                        <h2>{data.main.temp}
+                            {                        
+                                data.main.temp > 15 ?
+                                    <FaTemperatureHigh/>
+                                    :
+                                    <FaTemperatureLow/>
+                            }                        
+                        </h2>                        
+                    </div>
+                    <div className="weather-body">
+                        <span>
+                        {
+                            {
+                                'Clear': <FaSun/>,
+                                'Clouds': <FaCloud/>,
+                                'Snow': <FaSnowflake/>,
+                                'Rain': <FaCloudRain/>,
+                                'Drizzle': <FiCloudDrizzle/>,
+                                'Thunderstorm': <IoIosThunderstorm/>
+                            }[data.weather[0].main]
+                            
+                        } 
+                        </span>                               
+                        <p>{data.wind.speed}m/s</p>                        
+                    </div>
+                </div>
+                ))
                 :
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Weather info</Card.Header>
-                    <Card.Body> NO DATA</Card.Body>
-                </Card>                
+                <div className="card-example-empty">
+                    <div className="card-example-header">Weather info</div>
+                    <div className="card-example-body">NO DATA</div>
+                </div>                
                 }
             </div>
-            <h3 style={style.title}>Scrap Example</h3>
-            <center>
+            <h1>Scrap Example</h1>            
                 <p>
-                    <Button style={style.button} onClick={() => 
+                    <Button onClick={() => 
                         {scrapNews(sources.scrapUrl)
                         setscrapStatus('scraping')}
                     }>
                         Scrap Now
                     </Button>
-                </p>
-            </center>
-            <div className="row container-fluid justify-content-center col-4 col-sm-12">            
+                </p>            
+            <div className="list-card-scrap">
                 
                 {scrap && scrap.length > 0 ?
             
-            scrap.map((data) => (
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Reddit News </Card.Header>
-                    <Card.Body>
-                        <>
-                            <p><h5>Title</h5>{data.title}</p>
-                            <p><Button href={`${sources.scrapPage}${data.link}`}>
-                                go to page
-                                </Button>
-                            </p>                
-                        </>
-                    </Card.Body>
-                </Card>
+                scrap.map((data) => (
+                <div className="card-example-scrap">
+                    <a href={data.link}>
+                    <div className="scrap-header">Reddit News</div>
+                    <div className="scrap-body">                        
+                        <p>{data.title}</p>                        
+                            <FaRedditAlien/>                        
+                    </div>
+                    </a>
+                </div>
                 ))
                 :
                 scrapStatus === 'scraping' ?
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Scrap Info</Card.Header>
-                    <Card.Body> Scraping . . .<Spinner animation="border" variant="dark" /> </Card.Body>
-                </Card>
+                <div className="card-example-loading">
+                    <div className="card-exmaple-header">Scrap Info</div>
+                    <div className="card-exmaple-body"> Scraping . . .<Spinner animation="border" variant="dark" /> </div>
+                </div>
                 :    
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Scrap Info</Card.Header>
-                    <Card.Body> NO DATA</Card.Body>
-                </Card>
+                <div className="card-example-empty">
+                    <div className="card-exmaple-header">Scrap Info</div>
+                    <div className="card-exmaple-body"> NO DATA</div>
+                </div>
                 }
             </div>
-        </>
+        </StyledExample>
     )
 }
 

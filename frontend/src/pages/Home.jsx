@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import {connect} from 'react-redux'
 import { withRouter, Link, NavLink } from 'react-router-dom';
 import fetchCrudApi from '../actions/fetchCrudApi'
@@ -8,32 +8,47 @@ import socketIOClient from "socket.io-client";
 import {sources} from '../settings/config'
 import Result from '../components/Result'
 import { Card, Spinner, Button} from 'react-bootstrap'
+import CardTemplate from '../components/CardTemplate';
+import styled from 'styled-components';
+import {FaNotesMedical, FaBusinessTime, FaThList, FaUsersCog, FaGlobeAmericas, FaNetworkWired, FaCubes} from 'react-icons/fa'
 
+
+const StyledHome = styled.div`
+
+
+h1{
+    margin:  2rem auto;
+    text-align: center;
+}
+
+.card-list {
+    display: flex;
+}
+
+h2 {
+    padding: 1rem 0 0 1rem;
+}
+
+@media screen and (max-width: 550px) {
+
+    h1{
+    margin:  1rem auto;
+    font-size: 2rem;
+}
+
+    .card-list {
+    flex-wrap: wrap;
+    margin: 0;
+}
+    h2{
+        font-size: 1rem;
+    }
+}
+`
 
 const Home = ({fetchCrudApi, result, websocket, history}) => {
 
 
-const style = {
-        
-        //width: 450,
-        margin: 35,
-        //marginTop: 100,
-        
-        title:{
-            textAlign: 'center',
-            marginTop: 50
-        },
-        card:{
-            display: 'flex',
-            justifyContent: 'center',
-            marginRight: 35,
-            marginLeft: 50,
-            marginTop: 50,
-            textAlign: 'center'
-        },
-    }
-
-    
     //const [websocket, setWsStatus] = useState('checking...')
     const [healthCheck, setHealthCheck] = useState('checking...')
     const [homeLoading, sethomeLoading] = useState(false)
@@ -44,7 +59,7 @@ const style = {
             fetch(Url)
             .then((response) => {
                 setHealthCheck(response.statusText)
-                console.log(healthCheck, "ESTADO DE HEALTHCHECK");
+                console.log(healthCheck, "HEALTHCHECK STATEzzzz");
             })
         
             .catch((error) => {setBackendData('error')})
@@ -70,87 +85,56 @@ const style = {
     useEffect(() => {   
         //checkWebsocket(sources.WSocket)
 //        ConnectWS(sources.WSocket)
-        checkApiHealth(sources.HealthEndpoint)        
+        checkApiHealth(sources.HealthEndpoint)
     }, [])
 
     return (
-        <>
-            <h1 style={style.title}>Services Check</h1>            
-            <div className='row container-fluid'>                
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Api Endpoint State</Card.Header>
-                    <Card.Body>                    
-                    {   healthCheck === 'OK' ? 
-                            <h2 className='text-success'>{healthCheck}</h2> 
-                            : 
-                            <h2 className='text-danger'>{healthCheck}</h2> 
-                    }                    
-                    </Card.Body>
-                </Card>
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Scheduled Tasks</Card.Header>
-                    <Card.Body>
-                            <a className="btn btn-primary mt-2" role="button" href={sources.taskMonitor}>
-                                check tasks
-                            </a>
-                    </Card.Body>
-                </Card>
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Crud Example</Card.Header>
-                    <Card.Body>
-                            <Button className="btn btn-primary mt-2" onClick={() => history.push('/list')}>
-                                go to page
-                            </Button>
-                            
-                    </Card.Body>
-                </Card>
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Users Admin</Card.Header>
-                    <Card.Body>                    
-                        <Button
-                            className="btn btn-primary mt-2" 
-                            onClick={() => history.push('/users')}>
-                                go to page
-                        </Button>        
-                    </Card.Body>
-                </Card>
-                <Card style={style.card} className="shadow-lg">
-                    <Card.Header>Socket/Scraper Example</Card.Header>
-                    <Card.Body>                        
-                        <Button 
-                            className="btn btn-primary mt-2" 
-                            onClick={() => history.push('/example')}>
-                                go to page
-                        </Button>                        
-                    </Card.Body>
-                </Card>
+        <StyledHome>
+            <h1>Services Check</h1>            
+            <div className='card-list'>                
+                <CardTemplate title={'Endpoint Health'} 
+                customStyle={ healthCheck === 'OK' ? 'healthy' : 'error'}                
+                >
+                        <FaNotesMedical onClick={() => checkApiHealth(sources.HealthEndpoint)}/>
+                        <h2>{healthCheck}</h2>
+                </CardTemplate>
+                <CardTemplate title={'Scheduled Tasks'} customStyle="normal-content">                        
+                            <a href={sources.taskMonitor}>
+                                <FaBusinessTime/>
+                            </a>                        
+                </CardTemplate>
+                <CardTemplate title={'Crud Example'} customStyle="normal-content">                   
+                            <Link to='/list'>
+                                <FaThList />                                
+                            </Link>
+                </CardTemplate>
+                <CardTemplate title={'Users Admin'} customStyle="normal-content">
+                    <Link to='/users'>
+                        <FaUsersCog/>
+                    </Link>        
+                </CardTemplate>
+                <CardTemplate title={'Socket/Scraper Example'} customStyle="normal-content">
+                    <Link to='/example'>
+                        <FaGlobeAmericas/>                        
+                    </Link>
+                </CardTemplate>
             </div>
-            <div className='row container-fluid'>
-                <Card style={{...style.card, display: 'inline-table'}} className="shadow-lg">
-                    <Card.Header>Websocket State</Card.Header>
-                    <Card.Body>
-                        {
-                        websocket.status === 'connected' ||  websocket.status === 'message received' ? 
-                        <h3 className='text-success'>{websocket.status}</h3> 
-                            : 
-                        <h3 className='text-danger'>{websocket.status}</h3> 
-                        }
-                    </Card.Body>
-                </Card>            
-                <Card style={{...style.card, width: '65%'}} className="shadow-lg">
-                    <Card.Header>Backend Api request</Card.Header>
-                    <Card.Body>    
-                        <Button className="mt-2"
-                                onClick={() => checkApiHealth(sources.checkApiUrl)}>
-                            check Request        
-                        </Button>    
+            <div className='card-list'>
+                <CardTemplate title ={'Websocket State'} customStyle={websocket.status === 'connected' ||  websocket.status === 'message received' ? 
+                                    'healthy' : 'error'}>
+                        <FaNetworkWired/>                        
+                        <h2>{websocket.status}</h2>
+                </CardTemplate>            
+                
+                <CardTemplate title={'Backend Api request'} customStyle='api-request'>
+                        <FaCubes onClick={() => checkApiHealth(sources.checkApiUrl)}/>
                         {    
                             !backendApiData.data  &&
                             null                    
                         }        
                         {    
                             homeLoading === true &&
-                            <div className='mt-3'>
+                            <div >
                                 <Card.Header>
                                     <Spinner animation="border" role="status" variant='dark'/>
                                     Loading
@@ -164,11 +148,10 @@ const style = {
                         
                         {   (backendApiData.error && backendApiData.error.message) &&
                             <Result type='Error' message={backendApiData.error.message}/>
-                        }
-                    </Card.Body>
-                </Card>
+                        }                    
+                </CardTemplate>                
             </div>
-        </>
+        </StyledHome>
     )
 }
 

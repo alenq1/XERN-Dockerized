@@ -2,39 +2,43 @@ POST http://localhost:3000/api/tkrefresh/
 refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoib3RoZXJ1c2VyIiwiaWF0IjoxNTc0Njk3NTY5LCJleHAiOjE1NzQ3ODM5Njl9.bw2opqaubX0vJqZQlR6gnsWmaGf8onTi2nyZ4lafu9c
 
 ###
-GET http://localhost:3000/api/users
+GET http://localhost:4000/api/users
 //access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoib3RoZXJ1c2VyIiwiaWF0IjoxNTc0NzE0MDcyLCJleHAiOjE1NzQ3MTQxMDJ9.Bofxi85Xql4Sag8B-AMLlUDeVATqemLdIZhLltUy8Ds
 //refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NzQ2OTE3MTUsImV4cCI6MTU3NDc3ODExNX0.Nau_E2HEFiLvCGTt-TbgLcyIV8XRCQKH6Cr7g2MZ6yQ
 ###
-POST http://localhost:3000/api/login/
+POST http://localhost:4000/api/login/
 Content-Type: application/json
 
 {
-    "username": "otheruser",
+    "username": "admin",
     "password": "123456"
 }
 
 ###
-POST http://localhost:3000/api/register
+POST http://localhost:4000/api/register
 Content-Type: application/json
 
 {
-    "username": "apppp",
+    "username": "admin",
     "password": "123456",
-    "email": "mail@mail.net"
+    "email": "admin@mail.net"
 }
 
 ###
 http://localhost:3000/api/ff
 ###
-http://localhost:3000/api/crud
-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoib3RoZXJ1c2VyIiwiaWF0IjoxNTc1MTM0MjkxLCJleHAiOjE1NzUxMzQ1OTF9.UEBZsf0v7Ti6v86_rYl2WPvR2NkrUCp5Fyujl0ry0Yo
+http://localhost/api/crud
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4iLCJpZCI6IjVlOWNjN2FkNjE1YjllMDAxZGI4NGU0MyIsImlhdCI6MTU4NzMzMzgwNywiZXhwIjoxNTg3MzM0MTA3fQ.orWO0-X6tfZd6wyRgBdOwQOGT4YkGmY6Q3DubEvYckg
 ###
-POST http://localhost:3000/api/crud
+POST http://localhost:4000/api/crud
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFuZ3hpbmciLCJpZCI6IjVkZTFhNTk1ODAwYmFkMGZlMjM3ODAwNyIsImlhdCI6MTU4NTUyMjY3NCwiZXhwIjoxNTg1NTIyOTc0fQ.2YaJIB3Uy0JVVddutB3sj_TvibXQS95gjGyfMqE44a8
 Content-Type: application/json 
 
 {
     "name": "laptop",
     "price": 200,
-    "quantity": 2
+    "quantity": 2,
+    "description": "none"
 }
+###
+DELETE http://localhost:4000/api/users/1/

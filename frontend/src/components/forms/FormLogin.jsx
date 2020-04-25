@@ -8,9 +8,6 @@ import {sources} from '../../settings/config'
 
 const FormLogin = ({data, formType, action}) => {
 
-    // Pass the useFormik() hook initial form values and a submit function that will
-    // be called when the form is submitted
-
     //console.log(data.email, "email value")
     //console.log(action, "action to execute")
     //console.log(formType, "form type")
@@ -20,15 +17,16 @@ const FormLogin = ({data, formType, action}) => {
         initialValues={data}
         validationSchema={ValidateFormLogin}
         onSubmit={
-          (values, actions) => {
+          (values, {resetForm}) => {
                         
             if(formType === 'login'){
               action(sources.LoginUrl, 'post', values)
-              console.log(sources.LoginUrl, 'post', values, "Login Values")
+              //console.log(sources.LoginUrl, 'post', values, "Login Values")
             }
             else if(formType === 'register'){
               action(sources.RegisterUrl, 'post', values)
-              console.log(sources.RegisterUrl, 'post', values, "Register values")
+              resetForm()
+              //console.log(sources.RegisterUrl, 'post', values, "Register values")
             }
             else{
               Swal.fire({
@@ -37,9 +35,9 @@ const FormLogin = ({data, formType, action}) => {
                 icon: 'error',
                 confirmButtonText: 'Ok'
               })
-              actions.handleReset()
+              resetForm()
             }                    
-              //actions.setSubmitting(false);
+              //{resetForm}.setSubmitting(false);
           }          
         }
       >
@@ -56,7 +54,7 @@ const FormLogin = ({data, formType, action}) => {
       
         <Form noValidate onSubmit={handleSubmit}>    
             <Form.Group controlId="validationFormikUsername">
-              <Form.Label>Username</Form.Label>
+              
               <InputGroup>
             
                 <Form.Control
@@ -76,7 +74,7 @@ const FormLogin = ({data, formType, action}) => {
 
             {formType === 'register' ?
             <Form.Group controlId="validationFormikEmail">
-            <Form.Label>Email</Form.Label>
+            
             <InputGroup>
               <Form.Control
                 type="text"
@@ -96,7 +94,7 @@ const FormLogin = ({data, formType, action}) => {
             }
 
             <Form.Group  controlId="validationFormikPassword">
-              <Form.Label>Password</Form.Label>
+              
               <InputGroup>
                 <Form.Control
                   type="password"

@@ -13,12 +13,12 @@ const QueueList = (workerjobs: any) => {
 
   //console.log(workerjobs, "WORKERJOBS")
 
-  workerjobs.map( singlejob =>
-    {
+  workerjobs.map( singlejob => {
       
-      console.log(singlejob.name, 'Queue ready for process')
-      singlejob.queue = new Queue(singlejob.name, config.services.redis)
-      //console.log(singlejob.queue, 'SINGLE QUEUE')
+    console.log(singlejob.name, 'Queue ready for process')
+    singlejob.queue = new Queue(singlejob.name, config.services.redis)
+    
+    //console.log(singlejob.queue, 'SINGLE QUEUE')
       //console.log(singlejob.action, 'action to execute')
       //singlejob.queue.process((job, done) => {
       

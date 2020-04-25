@@ -8,23 +8,16 @@ import {sources} from '../../settings/config'
 
 const FormPasswordChange = ({data, formType, fetchCrudApi, id}) => {
 
-    // Pass the useFormik() hook initial form values and a submit function that will
-    // be called when the form is submitted
-
-    //console.log(data.email, "email value")
-    //console.log(action, "action to execute")
-    //console.log(formType, "form type")
-
     return (
       <Formik
         initialValues={data}
         validationSchema={ValidatePasswordChange}
         onSubmit={
-          (values, actions) => {
+          (values, {resetForm}) => {
             
             if(formType === 'change password'){
               fetchCrudApi(`${sources.UsersUrl}${id}`, 'patch', values)
-            console.log(`${sources.UsersUrl}${id}`, 'patch', values, "Register values")
+            //console.log(`${sources.UsersUrl}${id}`, 'patch', values, "Register values")
             }
             else{
               Swal.fire({
@@ -33,7 +26,7 @@ const FormPasswordChange = ({data, formType, fetchCrudApi, id}) => {
                 icon: 'error',
                 confirmButtonText: 'OK'
               })
-              actions.handleReset()
+              resetForm()
             }              
               //actions.setSubmitting(false);
           }
@@ -53,8 +46,7 @@ const FormPasswordChange = ({data, formType, fetchCrudApi, id}) => {
         
         
         <Form noValidate onSubmit={handleSubmit}>    
-            <Form.Group  controlId="validationFormikPassword">
-              <Form.Label>Password</Form.Label>
+            <Form.Group  controlId="validationFormikPassword">              
               <InputGroup>
                 <Form.Control
                   type="password"
@@ -71,12 +63,11 @@ const FormPasswordChange = ({data, formType, fetchCrudApi, id}) => {
               </InputGroup>
             </Form.Group>
             <Form.Group controlId="validationFormikpasswordConfirm">
-              <Form.Label>Password Confirmation</Form.Label>
               <InputGroup>
             
                 <Form.Control
                   type="password"
-                  placeholder="password"
+                  placeholder="Password Confirmation"
                   aria-describedby="inputGroupPrepend"
                   name="passwordConfirmation"
                   value={values.passwordConfirmation}
