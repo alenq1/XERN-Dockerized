@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {Card, Button, Spinner} from 'react-bootstrap'
-import {sources} from '../settings/config';
+import {sources, StyleSettings} from '../settings/config';
 import {FaCity, FaCloud, FaSun, FaTemperatureHigh, FaTemperatureLow,FaWind, FaCloudRain, FaSnowflake,
     FaMoon, FaRedditAlien
 } 
@@ -16,7 +16,7 @@ import styled from 'styled-components'
 
 const StyledExample = styled.div`
 
-
+    
     h1 {
         font-size: 2rem;
         text-align: center;
@@ -40,7 +40,7 @@ const StyledExample = styled.div`
     .card-example-weather, .card-example-empty, .card-example-scrap  {
         width: 25%;
         margin: 2rem;
-        background: linear-gradient(to bottom, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+        background: var(--card-background);
         transition: all 0.75s ease;
     }
 
@@ -50,15 +50,18 @@ const StyledExample = styled.div`
     
         span{
             margin:2rem;
-            width: 40%
+            width: 40%;
+            color: black;
         }
     
         h2{
             margin: 2rem 2rem .5rem 2rem;
             width: 60%;
+            color: black;
 
             svg{
                 margin-left: 2rem;
+                color: black;
             }
         }
     }
@@ -75,11 +78,13 @@ const StyledExample = styled.div`
         svg {
             width: 4rem;
             height: 4rem;
+            color: black;
         }
     
         p {
             margin: 2rem;
             width: 35%;
+            color: black;
         }
     }
 
@@ -97,8 +102,8 @@ const StyledExample = styled.div`
     }
 
     .scrap-header {
-        background: black;
-        color: whitesmoke;
+        background: var(--theme-color);
+        color: var(--background-app);
         padding: 1.5rem;
         height: 5rem;
     }
@@ -137,7 +142,7 @@ const StyledExample = styled.div`
     }
 
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
 
     h1 {

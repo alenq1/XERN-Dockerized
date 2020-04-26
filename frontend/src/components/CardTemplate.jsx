@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Spinner, Button} from 'react-bootstrap'
+import {StyleSettings} from '../settings/config';
 import styled from 'styled-components'
 
 
@@ -13,19 +14,19 @@ const StyledCard = styled.div`
     
     .card-template-header {
     
-        background: black;
-        color: whitesmoke;
+        background: var(--theme-color);
+        color: var(--background-app);
         padding: 1.5rem;
         height: 5rem;
 
     h1 {
-        color: whitesmoke;
+        color: var(--background-app);
     }
     
 }
 
 svg {
-    color: whitesmoke;
+    color: var(--background-app);
     width: 4rem;
     height: 4rem;
     position: absolute;
@@ -94,7 +95,7 @@ button, a{
 }
 
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
     width: ${props => props.smWidth ? props.smWidth : '45%'};
     margin: 1rem .4rem;

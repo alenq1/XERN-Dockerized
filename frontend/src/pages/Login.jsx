@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import {registerUser, LoginUser} from '../actions/userAuth'
 import {FaSignInAlt, FaEdit} from 'react-icons/fa'
 import styled from 'styled-components'
+import {StyleSettings} from '../settings/config';
 
 
 const StyledLoginRegister = styled.div`
@@ -84,7 +85,7 @@ button:hover {
     
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
 padding-top: 3rem;
 

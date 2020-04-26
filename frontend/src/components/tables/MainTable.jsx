@@ -2,7 +2,7 @@ import React, {memo} from 'react'
 import {Table, Button, Spinner} from 'react-bootstrap';
 import {FaTrash, FaInfoCircle, FaEdit, FaPlusSquare} from 'react-icons/fa'
 import {FaSortAmountUp, FaSortAmountDown} from 'react-icons/fa'
-import {sources} from '../../settings/config'
+import {sources, StyleSettings} from '../../settings/config'
 import Swal from 'sweetalert2'
 import styled from 'styled-components'
 
@@ -26,7 +26,7 @@ thead {
     
     }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
 margin: 2rem 1rem; 
 

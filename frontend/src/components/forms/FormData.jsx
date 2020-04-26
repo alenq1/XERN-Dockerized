@@ -3,7 +3,7 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import {Col, InputGroup, Button, Form} from 'react-bootstrap'
 import ValidateFormData from '../../helpers/ValidateFormData'
 import Swal from 'sweetalert2'
-import {sources} from '../../settings/config'
+import {sources, StyleSettings} from '../../settings/config'
 import styled from 'styled-components'
 
 
@@ -16,7 +16,7 @@ button {
   width: 150px;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
   margin: 1rem 7rem 1rem 1rem;
 }
 `

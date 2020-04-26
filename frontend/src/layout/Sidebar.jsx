@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { withRouter, Link, NavLink } from 'react-router-dom';
 import {FaNotesMedical, FaBusinessTime, FaThList, 
     FaUsersCog, FaGlobeAmericas, FaNetworkWired, FaCubes, FaHome} from 'react-icons/fa'
-import {sources} from '../settings/config'
+import {sources, StyleSettings} from '../settings/config'
 
 
 
@@ -35,8 +35,8 @@ const StyledSideBar = styled.nav`
 .link {
     display: flex;
     align-items: center;
-    height: 5rem;
-    color: white;
+    height: var(--width-header-sidebar);
+    color: var(--background-app);
     text-decoration: none;
     filter: grayscale(100%) opacity(0.7);
     transition: 600ms;
@@ -44,8 +44,8 @@ const StyledSideBar = styled.nav`
 
 .link:hover {
     filter: grayscale(0%) opacity(1);
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
+    background: #141414;
+    color: #ececec;
 }
 
 .link svg {
@@ -59,7 +59,7 @@ const StyledSideBar = styled.nav`
     margin-left: 1rem;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
 .navbar-list {
     flex-direction: row;
@@ -81,8 +81,8 @@ const StyledSideBar = styled.nav`
 .link {
     display: flex;
     align-items: center;
-    height: 4rem;
-    color: white;
+    height: var(--width-header-sidebar);
+    color: var(--background-app);
     text-decoration: none;
     filter: grayscale(100%) opacity(0.7);
     transition: 600ms;

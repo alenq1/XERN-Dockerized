@@ -5,7 +5,7 @@ import fetchCrudApi from '../actions/fetchCrudApi'
 //import {ConnectWS} from '../actions/wsocket';
 import {exampleSelector} from '../selectors/exampleSelector'
 import socketIOClient from "socket.io-client";
-import {sources} from '../settings/config'
+import {sources, StyleSettings} from '../settings/config'
 import Result from '../components/Result'
 import { Card, Spinner, Button} from 'react-bootstrap'
 import CardTemplate from '../components/CardTemplate';
@@ -29,7 +29,7 @@ h2 {
     padding: 1rem 0 0 1rem;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
     h1{
     margin:  1rem auto;

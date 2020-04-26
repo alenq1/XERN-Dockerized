@@ -9,7 +9,7 @@ import { sortData } from '../selectors/sortData';
 import FormData from '../components/forms/FormData';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
-import {sources, display} from '../settings/config'
+import {sources, display, StyleSettings} from '../settings/config'
 import Loading from '../components/Loading'
 import styled from 'styled-components'
 
@@ -20,11 +20,10 @@ const StyledUsers = styled.div`
     }
 
 
-@media screen and (max-width: 550px) {
-   
-   
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
+
     h1 {
-       font-size: 1.5rem;
+        font-size: 1.5rem;
     }
 
     .create-button {

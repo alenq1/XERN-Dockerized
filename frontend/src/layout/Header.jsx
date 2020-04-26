@@ -3,7 +3,7 @@ import { Nav, Navbar, Button, DropdownButton, Dropdown, Image } from 'react-boot
 import { Redirect, withRouter, NavLink, Link } from 'react-router-dom'
 
 import {connect} from 'react-redux'
-import {sources} from '../settings/config';
+import {sources, StyleSettings} from '../settings/config';
 import {LoggedOut} from '../actions/userAuth';
 import SessionButton from '../components/buttons/SessionButton';
 import LoginButton from '../components/buttons/LoginButton';
@@ -15,11 +15,12 @@ const StyledHeader = styled.nav`
 
 
 position: fixed;
-background-color: black;
+background-color: var(--theme-color);
+color: var(--background-app);
 top: 0;
 width: 100%;
 display: flex;
-height: 4rem;
+height: var(--width-header-sidebar);
 z-index: 3;
 
 img{
@@ -32,7 +33,7 @@ img{
 .header-title {
   margin: auto 1rem;
   text-decoration: none;
-  color: white;
+  color: var(--background-app);
 }
 
 .buttons {
@@ -41,12 +42,14 @@ img{
   
   button {
     background: transparent;
+    color: var(--background-app);
   }
 
   svg{
     width: 1.5rem;
     height: 1.5rem;
     margin:  0 .5rem;
+    color: var(--background-app);
   }
 }
 
@@ -56,7 +59,7 @@ img{
   }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
   
 .header-title, .login-text, .session-username{
   display: none;

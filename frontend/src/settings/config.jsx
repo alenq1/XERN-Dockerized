@@ -1,6 +1,5 @@
 
 
-
 // export const pages = {
 
 //     normal: [
@@ -36,6 +35,22 @@ export const sources = {
     scrapPage: 'https://www.reddit.com/r/news/new/',
     UsersUrl: `${myHost}/api/users/`,
     logo: require('../assets/imgs/mern-stack-transparent.png')
+}
+
+
+export const StyleSettings = {
+
+    fontUrl: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap',
+    fontColor: 'black',
+    MaxDisplayMobile: '640px',
+    themeColor: 'black',
+    background: 'whitesmoke',
+    widthHeaderSidebar: '4rem',
+    widthFullSidebar: '16rem',
+    cardBackground: 'linear-gradient(to bottom, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%)',
+    iconsColor: 'black'
+    // TO DO ADD MORE SETTINGS
+    
 }
 
 

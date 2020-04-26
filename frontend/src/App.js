@@ -5,17 +5,21 @@ import { PersistGate } from 'redux-persist/integration/react'
 import 'bootstrap/dist/css/bootstrap.css';
 import { createGlobalStyle } from 'styled-components';
 import Main from './layout/Main'
+import {StyleSettings} from './settings/config'
 
 const GlobalStyle = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap');
+@import url(${StyleSettings.fontUrl});
 
 :root{
 
---text-primary: #b6b6b6;
---text-secondary: #ececec;
---bg-primary: #232323;
---bg-secondary: #141414;
+--theme-color: ${StyleSettings.themeColor};
+--background-app: ${StyleSettings.background};
+--width-header-sidebar: ${StyleSettings.widthHeaderSidebar};
+--width-full-sidebar: ${StyleSettings.widthFullSidebar};
+--font-color: ${StyleSettings.fontColor};
+--svg-color: ${StyleSettings.iconsColor};
+--card-background: ${StyleSettings.cardBackground};
 
 }
 

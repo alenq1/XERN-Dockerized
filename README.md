@@ -10,7 +10,8 @@
          - Styled Components and some Bootstrap
          - React Router
          - Forms handling and validation with Formik and Yup
-         - Socket.io Client Side        
+         - Socket.io Client Side
+         - Url and config settings file
          - Other libarires
         
      ## Backend Site
@@ -39,6 +40,7 @@
            - Cheerio
            - Axios
          - Other Tools
+           - Config Settings file 
            - Joi for data validation
            - Cors Headers
            
@@ -93,15 +95,8 @@
   - Websocket client send a PING message to the server and awaits for PONG response
   - A button link to the Bull Board monitor for scheduled tasks running (see backend/src/app/app.ts to disable/enable)
   - A button link to the Crud page for manipulate data after login
+  - An Admin section with only Admin Role User access authorized for data manipulation
   - Websocket and scrap example page 
-
-  
-
-  ## Stand Alone (Buscar Nombre)
-  - TODO
-  - []
-  
-# Site Description
 
 
   ## TODO

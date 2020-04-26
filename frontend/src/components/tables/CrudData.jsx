@@ -1,7 +1,7 @@
 import React, {memo} from 'react'
 import {Button} from 'react-bootstrap';
 import {FaTrash, FaInfoCircle, FaEdit} from 'react-icons/fa'
-import {sources} from '../../settings/config'
+import {sources, StyleSettings} from '../../settings/config'
 import Swal from 'sweetalert2'
 import styled from 'styled-components'
 //import {ModalData, useModal} from './ModalData';
@@ -17,7 +17,7 @@ button {
 }
 
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
     .button-action{
 

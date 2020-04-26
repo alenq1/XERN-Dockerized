@@ -10,7 +10,7 @@ import Profile from '../pages/Profile'
 import Footer from '../layout/Footer'
 import {ConnectWS} from '../actions/wsocket';
 import {connect} from 'react-redux';
-import {sources} from '../settings/config';
+import {sources, StyleSettings} from '../settings/config';
 import { createBrowserHistory } from 'history'
 import { Router, Route, Switch } from 'react-router-dom'
 import PrivateRoute from '../helpers/PrivateRoute';
@@ -19,16 +19,18 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
 
-
---width-size: 4rem;
-
 width: 100vw;
 height: 100vh;
-background: whitesmoke;
+background: var(--background-app);
+color: var(--font-color);
 /*
 display: grid;
 grid-template-columns: auto auto;
 */
+
+svg{
+  color: var(--background-app);
+}
 
 .content {
     padding: 4rem 0rem 2rem 4rem;        
@@ -37,9 +39,9 @@ grid-template-columns: auto auto;
   }
 
   .sidebar {
-    margin-top: 4rem;
-    width: var(--width-size);
-    background: black;
+    margin-top: var(--width-header-sidebar);
+    width: var(--width-header-sidebar);
+    background: var(--theme-color);
     position: fixed;
     z-index: 3;
     height: 100vh;
@@ -49,28 +51,25 @@ grid-template-columns: auto auto;
   }
 
   .sidebar:hover{
-    width: 16rem;
+    width: var(--width-full-sidebar);
   }
 
   .sidebar:hover .link-text {
     display: block;
   }
 
-  
 
-
-@media screen and (max-width: 640px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
   .sidebar {
     bottom: 0;
     width: 100vw;
-    height: 4rem;
+    height: var(--width-header-sidebar);
     overflow: scroll;
   }
   
   .sidebar:hover {
-   width: 100%;
-    
+    width: 100%;
   }
 
   .sidebar link.text:hover {
@@ -83,9 +82,6 @@ grid-template-columns: auto auto;
     padding: 4rem 0rem 0rem 0rem;
     overflow: scroll;
   }
-
-  
-
 }
 
 

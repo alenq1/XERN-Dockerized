@@ -9,7 +9,7 @@ import { sortData } from '../selectors/sortData';
 import FormPasswordChange from '../components/forms/FormPasswordChange';
 import {setSort} from '../actions/sort'
 import fetchCrudApi from '../actions/fetchCrudApi'
-import {sources} from '../settings/config'
+import {sources, StyleSettings} from '../settings/config'
 import CreateButton from '../components/buttons/CreateButton';
 import CardTemplate from '../components/CardTemplate';
 import styled from 'styled-components'
@@ -43,7 +43,7 @@ width: 100%;
     }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: ${StyleSettings.MaxDisplayMobile}) {
 
 margin: 0;
 justify-content: center;
