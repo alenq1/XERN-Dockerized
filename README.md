@@ -1,6 +1,6 @@
 # XERN Dockerized Boilerplate
 
-   - This project is made for build and fast deploying of React frontend and Node Backend
+   - This project is made for build and fast deploying React frontend and Node Backend development enviroment 
    - It counts with the following stack:
   
      ## Frontend Side
@@ -100,6 +100,7 @@
 
 
   ## TODO
+  - [] Production Enviroment settings
   - [] improve UI display 
   - [] add more schedule tasks and delayed tasks
   - [] define model for saving data from scheduled taks
