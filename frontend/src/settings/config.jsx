@@ -22,7 +22,6 @@ const wsPort = 9000
 
 export const sources = {
 
-    //WSocket : `${myHost}:${wsPort}`,
     WSocket : `${myHost}:${wsPort}`,
     HealthEndpoint : `${myHost}/api/health/`,
     checkApiUrl : `${myHost}/api/test`,    

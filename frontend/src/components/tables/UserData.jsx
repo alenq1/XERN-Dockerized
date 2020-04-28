@@ -63,8 +63,8 @@ const DataTables = ({result, setData, fetchCrudApi, handleShow, setAction, colLe
             result  ?
     
                 result.map(field =>(
-                    <React.Fragment>
-                        <StyledUserData key={field._id}>
+                    <React.Fragment key={field._id}>
+                        <StyledUserData>
                             <td>{field.username}</td>
                             <td>{field.email}</td>  
                             <td>

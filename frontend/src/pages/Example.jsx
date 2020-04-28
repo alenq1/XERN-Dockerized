@@ -231,7 +231,7 @@ const Example = ({weather, scrap}) => {
                 
                 {weather && weather.length > 0 ?
                 weather.map((data) => (
-                <div className="card-example-weather">
+                <div className="card-example-weather" key={data.name}>
                     <div className="weather-header">
                         <span>{data.name}</span>
                         <h2>{data.main.temp}
@@ -282,7 +282,7 @@ const Example = ({weather, scrap}) => {
                 {scrap && scrap.length > 0 ?
             
                 scrap.map((data) => (
-                <div className="card-example-scrap">
+                <div className="card-example-scrap" key={data.link}>
                     <a href={data.link}>
                     <div className="scrap-header">Reddit News</div>
                     <div className="scrap-body">                        

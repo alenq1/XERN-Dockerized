@@ -46,7 +46,7 @@ const MainTable = (
 
     }
     //console.log(result, "pssed data");        
-    console.log(columns.names.length, "COL LENGTH");
+    // console.log(columns.names.length, "COL LENGTH");
     return (
         <StyledMainTable>
             <Table  striped hover borderless responsive style={style.table}>
@@ -89,4 +89,4 @@ const MainTable = (
 //   })
   
 //export default connect(null, mapDispatchToProps)(MainTable)
-export default memo(MainTable)
+export default MainTable

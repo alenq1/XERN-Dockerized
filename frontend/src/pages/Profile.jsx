@@ -103,7 +103,7 @@ const Profile = ({result, fetchCrudApi, loading, auth}) => {
         {result ?
 
             result.map( (user) => (
-            <CardTemplate title={'MyProfile'} smWidth={'85%'}>
+            <CardTemplate title={'MyProfile'} smWidth={'85%'} key={user.username}>
                 <div className='profile-content'>
                     <span>Username</span><p>{user.username}</p>
                     <span>Email</span><p>{user.email}</p>
@@ -112,14 +112,14 @@ const Profile = ({result, fetchCrudApi, loading, auth}) => {
                     <span>Status</span><p>{user.active ? 'active' : 'inactive'}</p>
                     <div className="password-form">
                         <FormPasswordChange 
-                        data={{ 
-                        password: '',
-                        passwordConfirmation: ''
-                        }}
-                        fetchCrudApi={fetchCrudApi}
-                        formType={'change password'}
-                        action={'patch'}
-                        id={auth.id}
+                            data={{ 
+                                password: '',
+                                passwordConfirmation: ''
+                            }}
+                            fetchCrudApi={fetchCrudApi}
+                            formType={'change password'}
+                            action={'patch'}
+                            id={auth.id}
                     />
                     </div>
                 </div>

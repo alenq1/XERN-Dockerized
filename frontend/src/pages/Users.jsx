@@ -68,22 +68,22 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
         <div>
             <Title content={'Users List'}/>
             <div className="main-table">
-            <MainTable
-                columns={usersColumns}
-                handleShow={handleShow}
-                loading={loading}
-                setAction={setAction}
-                setSort={setSort}
-            >   
-                <UserData 
-                    setData={setData}
-                    fetchCrudApi={fetchCrudApi}
-                    result={result}
-                    colLength={usersColumns.names.length}
+                <MainTable
+                    columns={usersColumns}
                     handleShow={handleShow}
+                    loading={loading}
                     setAction={setAction}
-                />
-            </MainTable>
+                    setSort={setSort}
+                >   
+                    <UserData 
+                        setData={setData}
+                        fetchCrudApi={fetchCrudApi}
+                        result={result}
+                        colLength={usersColumns.names.length}
+                        handleShow={handleShow}
+                        setAction={setAction}
+                    />
+                </MainTable>
             </div>
             <ModalData show={show} handleClose={handleClose} title={action}>
                 {action === 'create' ?
@@ -94,11 +94,12 @@ const Crud = ({result, fetchCrudApi, loading, sortKey, sortDirection, setSort}) 
                 :    
                 action === 'update' && data ?
                     <FormData data={{ 
-                        _id: data._id,
-                        name: data.name, 
-                        price: data.price, 
-                        quantity: data.quantity, 
-                        description: data.description}}
+                            _id: data._id,
+                            name: data.name, 
+                            price: data.price, 
+                            quantity: data.quantity, 
+                            description: data.description
+                        }}
                         fetchCrudApi={fetchCrudApi}
                         action={'patch'}   
                         />

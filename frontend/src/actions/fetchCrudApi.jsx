@@ -110,7 +110,7 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
   
   //console.log(STATE.example, "app state");
   axios.defaults.headers.common['access-token'] = sessionStorage.getItem('access-token')
-  console.log({url, method, data}, "VALUES TO FETCH");
+  // console.log({url, method, data}, "VALUES TO FETCH");
   
   if(method === 'get'){
     dispatch({ type: LOADING_DATA })
@@ -129,12 +129,12 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
         
         if(method === 'get'){
           
-          console.log(response.data, "GET DATA STATE");  
+          // console.log(response.data, "GET DATA STATE");  
           dispatch({ type: FETCH_DATA, payload: response.data.message })          
           
         }
         if(method === 'post'){
-            console.log(response.data, "CREATE STATE");
+            // console.log(response.data, "CREATE STATE");
             dispatch({ type: CREATE_DATA, payload: response.data.message })
             Swal.fire({
               title: 'CREATE SUCCESS!',
@@ -145,7 +145,7 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
           }
           
           if(method === 'patch'){
-          console.log(response.data, "UPDATE STATE");
+          // console.log(response.data, "UPDATE STATE");
           dispatch({ type: UPDATE_DATA, payload: response.data.message })
           
           Swal.fire({
@@ -157,7 +157,7 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
           }
           if(method === 'delete')
           {
-            console.log(response.data, "DELETE STATE");
+            // console.log(response.data, "DELETE STATE");
             dispatch({ type: DELETE_DATA, payload: response.data.message })
           
           Swal.fire({
@@ -170,7 +170,7 @@ const fetchCrudApi = (url, method, data) => async(dispatch) => {
       })
   
       .catch(error => {
-        console.log(error, "error response from fetch");
+        // console.log(error, "error response from fetch");
         dispatch({ type: ERROR_FETCH, payload: error.message })
         Swal.fire({
           title: error.response ?  error.response.data.status : 'ERROR!',

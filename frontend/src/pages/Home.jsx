@@ -59,7 +59,7 @@ const Home = ({fetchCrudApi, result, websocket, history}) => {
             fetch(Url)
             .then((response) => {
                 setHealthCheck(response.statusText)
-                console.log(healthCheck, "HEALTHCHECK STATEzzzz");
+                // console.log(healthCheck, "HEALTHCHECK STATEzzzz");
             })
         
             .catch((error) => {setBackendData('error')})

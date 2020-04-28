@@ -105,11 +105,11 @@ const StyledSideBar = styled.nav`
 
 const links= [
     {name: 'Home', icon: <FaHome/>, link: '/'},
-    {name: 'Tasks', icon: <FaBusinessTime/>, link: '#'},
+    {name: 'Tasks', icon: <FaBusinessTime/>, link: sources.taskMonitor},
     {name: 'Crud', icon: <FaThList/>, link: '/list'},
     {name: 'Users', icon: <FaUsersCog/>, link: '/users'},
     {name: 'Scrap & Socket', icon: <FaGlobeAmericas/>, link: '/example'},
-    {name: 'Theme', icon: <FaCubes/>, link: sources.taskMonitor},
+    {name: 'Theme', icon: <FaCubes/>, link: '#'},
 
 ]
 

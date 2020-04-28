@@ -83,7 +83,7 @@ const Header = ({username, status, LoggedOut, history}) => {
   return (
     
     <StyledHeader>
-      {console.log(history.location.pathname, 'history EN HEADER')}
+      {/* {console.log(history.location.pathname, 'history on HEADER')} */}
       <img src={sources.logo} alt="MERN Boilerplate"/>
       <NavLink to="/" className="header-title">
             Boilerplate

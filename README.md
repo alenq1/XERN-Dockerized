@@ -98,6 +98,18 @@
   - An Admin section with only Admin Role User access authorized for data manipulation
   - Websocket and scrap example page 
 
+# ScreenShots 
+
+![Home-Desktop](/screenshots/home-desktop.jpg)
+![Home-Mobile](/screenshots/home-mobile.jpg)
+![Sidebar-Desktop](/screenshots/sidebar-desktop.jpg)
+![Sidebar-Mobile](/screenshots/sidebar-mobile.jpg)
+![Crud-Page](/screenshots/crud-page.jpg)
+![Crud-Modal-Actions](/screenshots/crud-modal-actions.jpg)
+![Admin-User-Section](/screenshots/admin-user-section.jpg)
+![Websocket-Example](/screenshots/websocket-data-example.jpg)
+![Scraping-Example](/screenshots/scraping-data.jpg)
+
 
   ## TODO
   - [] Production Enviroment settings
