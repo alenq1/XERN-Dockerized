@@ -99,14 +99,23 @@
   - Websocket and scrap example page 
 
 # ScreenShots 
-
+  ## Home Section
 ![Home-Desktop](/screenshots/home-desktop.jpg)
-![Home-Mobile](/screenshots/home-mobile.jpg)
-![Sidebar-Desktop](/screenshots/sidebar-desktop.jpg)
-![Sidebar-Mobile](/screenshots/sidebar-mobile.jpg)
+  ### Mobile Display
+  ![Home-Mobile](/screenshots/home-mobile.jpg)
+  
+  ### Sidebar
+  ![Sidebar-Desktop](/screenshots/sidebar-desktop.jpg)
+  ![Sidebar-Mobile](/screenshots/sidebar-mobile.jpg)
+
+  ## CRUD Section
 ![Crud-Page](/screenshots/crud-page.jpg)
 ![Crud-Modal-Actions](/screenshots/crud-modal-actions.jpg)
+
+  ## Admin Users Section
 ![Admin-User-Section](/screenshots/admin-user-section.jpg)
+
+  ## Websocket and Scraping Examples
 ![Websocket-Example](/screenshots/websocket-data-example.jpg)
 ![Scraping-Example](/screenshots/scraping-data.jpg)
 
