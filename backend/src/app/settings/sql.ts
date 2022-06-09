@@ -11,6 +11,7 @@ export const sql =  createConnection({
     "password": config.services.sqldb.password,
     "database": config.services.sqldb.database,
     "entities": [Users, exampleData],
+    // "entities": ['src/app/models/sql/{.ts,.js}'],    
     "migrationsTableName": "custom_migration_table",
     "migrations": ["migration/*.ts"],
     "cli": {

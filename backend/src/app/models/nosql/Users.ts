@@ -12,6 +12,7 @@ export interface IUser extends Document{
     active: boolean,
     created: Date,
     updated: Date,
+    save(): any,
     encryptPassword(password: string): Promise<string>,
     validatePassword(password: string): Promise<boolean>,
     generateAccessToken(user: string, id: string): Promise<string>,

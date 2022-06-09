@@ -11,7 +11,7 @@ const config: any = {
 
     services:{    
         redis: process.env.REDIS_URL || 'redis://redis:6379' ,
-        dbtype: 'mongo', // 'sql or 'mongo'
+        dbtype: process.env.DB_TYPE || 'mongo', // 'sql or 'mongo'
         nosqldb: process.env.MONGODB_URL || 'mongodb://userExample:example@mongo:27017/',
         sqldb : {
             type: process.env.SQL_DB || 'mysql',

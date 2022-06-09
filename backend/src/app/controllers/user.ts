@@ -68,7 +68,7 @@ export const register = async(req:Request, res:Response) => {
         //SQL
     
         try {
-            const userExists = await getRepository(Users).find({
+            const userExists = await getRepository<Users>("Users").find({
                 where: [
                     { email: req.body.email },
                     { username: req.body.username }
@@ -82,7 +82,7 @@ export const register = async(req:Request, res:Response) => {
         try {   
             
             //SQL
-            const newUser = await getRepository(Users).create({
+            const newUser = await getRepository<Users>("Users").create({
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
@@ -91,7 +91,7 @@ export const register = async(req:Request, res:Response) => {
 
             newUser.password = await newUser.encryptPassword(newUser.password)
 
-            const registerUser = await getRepository(Users).save(newUser)
+            const registerUser = await getRepository<Users>("Users").save(newUser)
             console.log(registerUser, "USUARIO REGISTRADO")
             res.status(201).send(customResponse(
                 'Register Success', 
@@ -143,7 +143,7 @@ export const login = async (req:Request, res:Response) => {
     
     if (db === 'sql') {
         //SQL
-    const userRepository = getRepository(Users)
+    const userRepository = getRepository<Users>("Users")
     let user: Users
     try {
         user = await userRepository.findOneOrFail({ where: { username: req.body.username } });
@@ -194,7 +194,7 @@ export const refreshToken = async (req:Request, res:Response) => {
         
         if (db === 'sql') {
             //SQL
-        const userRepository = getRepository(Users)
+        const userRepository = getRepository<Users>("Users")
         let user: Users
         try {
             user = await userRepository.findOneOrFail({ where: { username: req.body.user } });
@@ -252,7 +252,7 @@ export const listUsers = async (req:Request, res:Response) => {
     
     if (db === 'sql') {
         
-        const userRepository = getRepository(Users)
+        const userRepository = getRepository<Users>("Users")
         let user: Users
         user = await userRepository.findOneOrFail({ where: { username: req.body.username } });
         
@@ -263,7 +263,7 @@ export const listUsers = async (req:Request, res:Response) => {
         
             try {
             
-                const all = await getRepository(Users).find()
+                const all = await getRepository<Users>("Users").find()
                 res.status(200).send(customResponse('ok', all));
             
             } 
@@ -314,7 +314,7 @@ export const updateUser = async (req:Request, res:Response) => {
         try {
     
             //SQL
-            const userRepository = getRepository(Users)
+            const userRepository = getRepository<Users>("Users")
             let user: Users
             user = await userRepository.findOneOrFail(req.params.id);
             userRepository.merge(user, rawdata)
@@ -351,7 +351,7 @@ export const userProfile = async(req: Request, res:Response): Promise<void>  => 
     if (db === 'sql') {
         try {
             
-            const userRepository = getRepository(Users)
+            const userRepository = getRepository<Users>("Users")
             let data: Users
             data = await userRepository.findOneOrFail(req.params.id);
             res.status(200).send(customResponse('ok', [data]))
@@ -386,7 +386,7 @@ export const deleteUser = async(req: Request, res:Response): Promise<void> => {
     if (db === 'sql') {
         try {
 
-            const userRepository = getRepository(Users)
+            const userRepository = getRepository<Users>("Users")
             let user: Users
             const toDelete = await userRepository.delete(req.params.id)
         

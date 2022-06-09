@@ -28,7 +28,7 @@ export enum UserRole {
     PRIVILEGED = "privileged"
 }
 
-@Entity()
+@Entity("Users")
 export default class Users{
 
     @PrimaryGeneratedColumn("uuid")
