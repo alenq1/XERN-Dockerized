@@ -73,14 +73,14 @@ input:focus {
 
 button {   
     margin-top: 1rem;
-    background: darkblue;
+    background: #0303f8;
     width: 30%;
     
 }
 
 button:hover {   
     
-    background: #04044e;
+    background: #1200aff4;
     
     
 }
