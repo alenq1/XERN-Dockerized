@@ -56,7 +56,7 @@
       "@types/redis": "^4.0.10",
       "@types/mysql": "^2.15.21",
       "@types/socket.io": "^3.0.1",
-      "nodemon": "^2.0.16",
+      "nodemon": "^2.0.20",
       "prettier": "^2.6.2",
       "rimraf": "^3.0.2",
       "ts-node": "10.8.1",
